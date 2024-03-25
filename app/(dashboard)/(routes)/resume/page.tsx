@@ -1,41 +1,29 @@
-import { Input } from "@/components/ui/input";
+"use client";
 
+import { useState } from 'react';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import ResumeInput from './components/resume-input';
+import ResumeLayout from "./components/resume-layout"
 const Resume = () => {
-    return (  
-        <div>
-        <h1 className='text-3xl font-bold text-gray-900'>Name</h1>
-        <div className='mt-3 flex items-end justify-between'>
-            <p className='text-2xl text-gray-900'>
-                Hello
+    const [resumeData, setResumeData] = useState({
+        name: '',
+        email: '',
+        // Add more fields as needed
+    });
 
-            </p>
+    const handleInputChange = (key: string, value: string) => {
+        setResumeData(prevData => ({
+            ...prevData,
+            [key]: value
+        }));
+    };
+
+    return (
+        <div className="mx-auto flex max-w-7xl space-x-5 space-y-5">
+            <ResumeInput onChange={handleInputChange} />
+            <ResumeLayout data={resumeData} />
         </div>
-        <hr  className='my-4'/>
-
-        <div className='flex flex-col gap-y-6'>
-        <div className='flex items-center gap-x-4 '>
-            <h3 className='font-semibold text-black'>Size</h3>
-            Hi
-
-        </div>
-
-        <div className='flex items-center gap-x-4 '>
-            <h3 className='font-semibold text-black'>Color</h3>
-            <div className='h-6 w-6 rounded-full border border-gray-600 ' style={{backgroundColor: "blue"}} />
-           
-        </div>
-        </div>
-
-        <div className='mt-10 flex items-center gap-x-3'>
-            <button>
-                button
-            </button>
-
-        </div>
-        
-    </div>
-
     );
-}
- 
+};
+
 export default Resume;
