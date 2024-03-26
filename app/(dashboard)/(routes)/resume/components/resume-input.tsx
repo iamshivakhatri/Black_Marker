@@ -12,7 +12,7 @@ const ResumeInput: React.FC<ResumeInputProps> = ({ onChange }) => {
     };
 
     return (
-        <div className="flex-0.4">
+        <div className="flex-1">
             <ResumeForm />
         </div>
     );

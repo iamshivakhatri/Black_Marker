@@ -1,6 +1,6 @@
 // context/FormContext.tsx
 import React, { createContext, useContext, useState } from 'react';
-import { FormData, FormContextType } from '../types';
+// import { FormData, FormContextType } from '../types';
 
 const initialFormData: FormData = {
   username: '',

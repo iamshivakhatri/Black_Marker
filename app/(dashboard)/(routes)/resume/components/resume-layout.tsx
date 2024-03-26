@@ -8,7 +8,7 @@ interface ResumeLayoutProps {
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
     return (
-        <div className="flex-0.6">
+        <div className="flex-1">
             <h1>{data.name}</h1>
             <p>{data.email}</p>
             hi
