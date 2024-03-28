@@ -1,5 +1,5 @@
 import * as React from "react"
-
+import { toast } from "react-hot-toast"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -25,6 +25,7 @@ export function Experience({ data }: ExperienceProps) {
 
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
+    toast.success('Experience Added');
   };
 
   return (

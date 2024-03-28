@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import ResumeInput from './components/resume-input';
 import ResumeLayout from "./components/resume-layout"
+import { useGlobalContext } from '@/context/global-context';
 const Resume = () => {
     const [resumeData, setResumeData] = useState({
         name: '',
@@ -19,10 +20,13 @@ const Resume = () => {
     };
 
     return (
-<div className="mx-auto md:max-w-7xl flex-col sm:flex lg:flex lg:max-w-7xl xl:max-w-[90vw] 2xl:max-w-14xl space-x-5 space-y-5">
+<div className="mx-auto md:max-w-7xl flex sm:flex lg:flex lg:max-w-7xl xl:max-w-[90vw] 2xl:max-w-14xl space-x-5 space-y-5">
 
             <ResumeInput onChange={handleInputChange} />
             <ResumeLayout data={resumeData} />
+            <div>
+
+            </div>
         </div>
     );
 };

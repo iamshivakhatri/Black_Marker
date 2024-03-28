@@ -19,6 +19,9 @@ import { Education } from "./education"
 import { Info } from "./info"
 import { Skills } from "./skills"
 
+import { useGlobalContext } from "@/context/global-context"
+import { useEffect } from "react"
+
 export function ResumeForm() {
     // Extend ResumeFormProps to include new fields
     interface ResumeFormProps {
@@ -65,6 +68,14 @@ export function ResumeForm() {
     const onSubmit = (values: ResumeFormValues) => {
         console.log(values);
     }
+
+    const {userId, setUserId } = useGlobalContext();
+
+  
+
+    const handleChange = (e) => {
+      setUserId(e.target.value)
+    }
       
     return (
        
@@ -74,6 +85,14 @@ export function ResumeForm() {
         <Experience data={{ type: "Experience" }}/>
         <Projects data={{ type: "Projects" }}/>
         <Skills data={{ type: "Skills" }}/>
+        <div>
+          <p>User ID: {userId}</p>
+          
+        </div>
+
+          <input type="text" onChange={handleChange}/>
+
+
         </div>
         
  
@@ -195,3 +214,4 @@ export function ResumeForm() {
         // </Form>
     )
 }
+
