@@ -14,7 +14,7 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
   const { projectData } = useGlobalContext();
 
   return (
-    <div className="flex-1">
+    <div className="w-3/4 h-full">
       <h1>{data.name}</h1>
       <p>{data.email}</p>
       <div>
