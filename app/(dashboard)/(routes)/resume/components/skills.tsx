@@ -32,6 +32,10 @@ export function Skills({ data }: SkillsProps) {
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
   };
+  const handleChange = (index: number, key: string, value: string) => {
+
+  }
+
 
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
@@ -43,9 +47,17 @@ export function Skills({ data }: SkillsProps) {
           <form key={index} >
             <div className="grid w-full items-center gap-4 mb-5">
               <Label htmlFor="framework">Languages</Label>
-              <Input id={`university-${index}`} placeholder="Javascript, Java, Python, C++, C ..." />
+              <Input
+               id={`university-${index}`} 
+               placeholder="Javascript, Java, Python, C++, C ..." 
+               onChange={e => handleChange(index, 'languages', e.target.value)}
+               />
               <Label htmlFor="framework">Frameworks</Label>
-              <Input id={`university-${index}`} placeholder="React, Flask, Django, Angular ..." />
+              <Input
+               id={`university-${index}`} placeholder="React, Flask, Django, Angular ..." 
+               onChange={e => handleChange(index, 'frameworks', e.target.value)}
+               
+               />
             
             
             </div>

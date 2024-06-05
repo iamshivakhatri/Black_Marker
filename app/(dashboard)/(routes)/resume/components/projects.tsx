@@ -24,10 +24,14 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
 
   const handleChange = (index: number, key: string, value: string) => {
     const updatedProjects = [...projects];
+    updatedProjects[index] = { ...updatedProjects[index], [key]: value };
+    setProjects(updatedProjects);
+    console.log("This is handleChange updatedProjects",updatedProjects);
     console.log(value);
   };
 
   const handleSaveProject = () => {
+    console.log("This is handleSaveProject",projects);
     projects.forEach(project => addProjectData(project));
     setProjects([]);
     setFormCount(1);

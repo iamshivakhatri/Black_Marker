@@ -1,6 +1,6 @@
-// GlobalContext.tsx
 "use client";
-import React, { createContext, useContext, Dispatch, SetStateAction, useState, useEffect } from 'react';
+
+import React, { createContext, useContext, Dispatch, SetStateAction, useState, useEffect, ReactNode } from 'react';
 
 type ProjectDataType = {
   name: string;
@@ -35,8 +35,11 @@ const GlobalContext = createContext<GlobalContextType>({
 
 export const useGlobalContext = () => useContext(GlobalContext);
 
-export const GlobalContextProvider: React.FC = ({ children }) => {
+type GlobalContextProviderProps = {
+  children: ReactNode;
+};
 
+export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ children }) => {
   const [userId, setUserId] = useState('');
   const [projectData, setProjectData] = useState<ProjectDataType[]>([]);
   const [userData, setUserData] = useState<UserData[]>([]);
@@ -50,11 +53,11 @@ export const GlobalContextProvider: React.FC = ({ children }) => {
   }, []);
 
   const addProjectData = (project: ProjectDataType) => {
-    setProjectData(prevData => [...prevData, project]);
+    setProjectData((prevData) => [...prevData, project]);
   };
 
   const addUserData = (userDataItem: UserData) => {
-    setUserData(prevData => [...prevData, userDataItem]);
+    setUserData((prevData) => [...prevData, userDataItem]);
     localStorage.setItem('userData', JSON.stringify([...userData, userDataItem]));
   };
 
