@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useGlobalContext } from '@/context/global-context';
+import { useState } from "react";
+import { set } from "react-hook-form"
 
 
 
@@ -31,15 +33,24 @@ interface SkillsProps {
 }
 
 export function Skills({ data }: SkillsProps) {
+  const {addSkillsData} = useGlobalContext();
   const [formCount, setFormCount] = React.useState(1);
+  const [skills, setSkills] = useState<Array<{ languages: string; frameworks: string;  }>>([]);
 
-  const handleAddForm = () => {
-    setFormCount(prevCount => prevCount + 1);
-  };
+
   const handleChange = (index: number, key: string, value: string) => {
+    console.log("This is key", key);
+    const updatedSkills = [...skills];
+    updatedSkills[index] = { ...updatedSkills[index], [key]: value };
+    setSkills(updatedSkills);
 
 
   }
+
+  const handleSaveSkills = () => {
+    addSkillsData(skills);
+
+  };
 
 
   return (
@@ -68,8 +79,15 @@ export function Skills({ data }: SkillsProps) {
             </div>
           </form>
         ))}
+
+
       </CardContent>
-     
+
+      <CardFooter className="flex justify-end">
+        <Button onClick={handleSaveSkills}>Save Skills</Button>
+      </CardFooter>
+      
+    
     </Card>
   )
 }

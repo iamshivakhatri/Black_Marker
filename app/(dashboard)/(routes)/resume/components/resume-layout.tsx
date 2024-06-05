@@ -11,23 +11,66 @@ interface ResumeLayoutProps {
 }
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
-  const { projectData } = useGlobalContext();
+  const { projectData, skillsData, experienceData } = useGlobalContext();
   console.log("This is projectData in resume layout", projectData)
 
   return (
     <div className="w-3/4 h-full">
       <h1>{data.name}</h1>
       <p>{data.email}</p>
+
+      {/* Personal information */}
+      <h1>Personal Information</h1>
+        
+
+      {/* Education */}
+      <h1> Education </h1>
+
+       <div className="border-b  mt-2 mb-2" > </div>   
+       {/* Experience */}
+        <h1> Experience </h1>
+        {experienceData.map((experience, index) => (
+          <div key={index} >
+            <h1>{experience.company}</h1>
+            <p>Position: {experience.title}</p>
+            <p>From: {experience.start_date}</p>
+            <p>To: {experience.end_date}</p>
+            <p>Description: {experience.detailed_experience}</p>
+          </div>
+        ))}
+
+       <div className="border-b  mt-2 mb-2" > </div>
+
+      {/* Project */}
       <div>
-        <h2>Projects</h2>
+        <h1>Projects</h1>
         {projectData.map((project, index) => (
           <div key={index}>
-            <h3>{project.name}</h3>
+            <h1>{project.name}</h1>
             <p>Language: {project.language}</p>
             <p>Description: {project.description}</p>
           </div>
         ))}
       </div>
+
+      <div className="border-b  mt-2 mb-2" > </div>   
+
+       {/* Skills */}
+       <div>
+        <h1>Skills</h1>
+        {skillsData.map((skill, index) => (
+          <div key={index}>
+            <p>Language: {skill.languages}</p>
+            <p>Description: {skill.frameworks}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="border-b  mt-2 mb-2" > </div>
+
+
+
+
     </div>
   );
 };

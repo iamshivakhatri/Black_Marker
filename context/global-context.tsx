@@ -13,6 +13,21 @@ type UserData = {
   score: number;
 };
 
+type Skill = {
+  languages: string;
+  frameworks: string;
+
+};
+
+type Experience = {
+  title: string;
+  company: string;
+  start_date: string;
+  end_date: string;
+  detailed_experience: string;
+
+};
+
 type GlobalContextType = {
   userId: string;
   setUserId: Dispatch<SetStateAction<string>>;
@@ -21,6 +36,15 @@ type GlobalContextType = {
   userData: UserData[];
   addUserData: (userData: UserData) => void;
   setUserData: Dispatch<SetStateAction<UserData[]>>;
+
+  // skills
+  skillsData: Skill[];
+  addSkillsData: (skills: Skill[]) => void;
+
+  // Experience
+  experienceData: Experience[];
+  addExperienceData: (experience: Experience[]) => void;
+
 };
 
 const GlobalContext = createContext<GlobalContextType>({
@@ -31,6 +55,11 @@ const GlobalContext = createContext<GlobalContextType>({
   userData: [],
   addUserData: () => {},
   setUserData: () => {},
+  skillsData: [],
+  addSkillsData: () => {},
+
+  experienceData: [],
+  addExperienceData: () => {},
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -43,6 +72,8 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
   const [userId, setUserId] = useState('');
   const [projectData, setProjectData] = useState<ProjectDataType[]>([]);
   const [userData, setUserData] = useState<UserData[]>([]);
+  const [skillsData, setSkillsData] = useState<Skill[]>([]);
+  const [experienceData, setExperienceData] = useState<Experience[]>([]);
 
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
@@ -63,8 +94,20 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
     localStorage.setItem('userData', JSON.stringify([...userData, userDataItem]));
   };
 
+  const addSkillsData = (skills: Skill[]) => {
+    setSkillsData(skills);
+  }
+
+  const addExperienceData = (experience: Experience[]) => {
+    setExperienceData(experience);
+  }
+
   return (
-    <GlobalContext.Provider value={{ userId, setUserId, projectData, addProjectData, userData, addUserData, setUserData }}>
+    <GlobalContext.Provider value={{ 
+      userId, setUserId, projectData, addProjectData, userData, addUserData, setUserData,
+      skillsData, addSkillsData , experienceData, addExperienceData
+      
+      }}>
       {children}
     </GlobalContext.Provider>
   );

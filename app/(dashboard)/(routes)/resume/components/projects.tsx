@@ -23,13 +23,11 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
   };
 
   const handleChange = (index: number, key: string, value: string) => {
-    console.log("This is projects", projects);
+  
     const updatedProjects = [...projects];
+    console.log("spread operator", { ...updatedProjects[index]});
     updatedProjects[index] = { ...updatedProjects[index], [key]: value };
     setProjects(updatedProjects);
-    console.log("This is handleChange updatedProjects",updatedProjects);
-    console.log("This is projects after", projects);
-    console.log(value);
   };
 
   const handleSaveProject = () => {
@@ -73,7 +71,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
         ))}
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button onClick={handleAddForm}>+1</Button>
+        <Button className='mr-1' onClick={handleAddForm}>+1</Button>
         <Button onClick={handleSaveProject}>Save Projects</Button>
       </CardFooter>
     </Card>
