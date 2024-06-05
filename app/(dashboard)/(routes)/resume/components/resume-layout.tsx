@@ -12,6 +12,7 @@ interface ResumeLayoutProps {
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
   const { projectData } = useGlobalContext();
+  console.log("This is projectData in resume layout", projectData)
 
   return (
     <div className="w-3/4 h-full">

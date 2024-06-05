@@ -17,7 +17,7 @@ type GlobalContextType = {
   userId: string;
   setUserId: Dispatch<SetStateAction<string>>;
   projectData: ProjectDataType[];
-  addProjectData: (project: ProjectDataType) => void;
+  addProjectData: (projects: ProjectDataType[]) => void;
   userData: UserData[];
   addUserData: (userData: UserData) => void;
   setUserData: Dispatch<SetStateAction<UserData[]>>;
@@ -52,8 +52,10 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
     }
   }, []);
 
-  const addProjectData = (project: ProjectDataType) => {
-    setProjectData((prevData) => [...prevData, project]);
+  const addProjectData = (projects: ProjectDataType[]) => {
+    console.log('This is the project:', projects);
+    setProjectData(projects);
+    console.log('This is the projectData:', projectData);
   };
 
   const addUserData = (userDataItem: UserData) => {

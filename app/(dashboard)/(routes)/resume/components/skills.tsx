@@ -19,6 +19,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { useGlobalContext } from '@/context/global-context';
+
+
+
 
 interface SkillsProps {
     data: {
@@ -33,6 +37,7 @@ export function Skills({ data }: SkillsProps) {
     setFormCount(prevCount => prevCount + 1);
   };
   const handleChange = (index: number, key: string, value: string) => {
+
 
   }
 
