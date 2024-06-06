@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useGlobalContext } from '@/context/global-context';
 import  DatePicker from "./datepicker"
 
@@ -33,6 +33,15 @@ export function Experience({ data }: ExperienceProps) {
   const [experiences, setExperiences] = useState<Array<{ title: string; company: string; start_date: string; end_date: string; detailed_experience: string }>>([]);
 
 
+  useEffect(() => {
+    const storedExperience = localStorage.getItem('experiences');
+    console.log("this is storedExperience", storedExperience)
+    if (storedExperience) {
+      console.log("this is storedEducation inside if clause", storedExperience)
+      setExperiences(JSON.parse(storedExperience));
+    }
+    
+  }, [])
 
 
 
@@ -43,10 +52,12 @@ export function Experience({ data }: ExperienceProps) {
 
   const handleSaveExperience = () => {
     console.log("This is handleSaveExperience",experiences);
+    localStorage.setItem('experiences', JSON.stringify(experiences));
+
     addExperienceData(experiences);
     toast.success('Experience Saved');
 
-  
+
   }
 
   const handleChange = (index: number, key: string, value: string) => {
@@ -88,6 +99,7 @@ export function Experience({ data }: ExperienceProps) {
                 id={`title-${index}`} 
                 placeholder="Software Engineering Intern" 
                 onChange={e => handleChange(index, 'title', e.target.value)}
+                value={experiences[index]?.title || ""}
                 
                 />
               </div>
@@ -97,6 +109,7 @@ export function Experience({ data }: ExperienceProps) {
                  <Input 
                  id={`company-name-${index}`} placeholder="Google" 
                  onChange={e => handleChange(index, 'company', e.target.value)}
+                 value={experiences[index]?.company || ""}
                  
                  />
 
@@ -126,6 +139,7 @@ export function Experience({ data }: ExperienceProps) {
                 id={`experiences-${index}`}
                 placeholder="Analyzed millions of datasets, skillfully extracting valuable insights through the utilization of Python, R, and PowerBI.." 
                 onChange={e => handleChange(index, 'detailed_experience', e.target.value)}
+                value = {experiences[index]?.detailed_experience || ""}
                 />
 
               

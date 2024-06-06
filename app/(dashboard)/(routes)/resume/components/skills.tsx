@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useGlobalContext } from '@/context/global-context';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { set } from "react-hook-form"
 
 
@@ -38,17 +38,26 @@ export function Skills({ data }: SkillsProps) {
   const [skills, setSkills] = useState<Array<{ languages: string; frameworks: string;  }>>([]);
 
 
+  useEffect(() => {
+    const storedSkills = localStorage.getItem('skills');
+    if (storedSkills) {
+      setSkills(JSON.parse(storedSkills));
+    }
+
+  }, []);
+
+
   const handleChange = (index: number, key: string, value: string) => {
     console.log("This is key", key);
     const updatedSkills = [...skills];
     updatedSkills[index] = { ...updatedSkills[index], [key]: value };
     setSkills(updatedSkills);
 
-
   }
 
   const handleSaveSkills = () => {
     addSkillsData(skills);
+    localStorage.setItem('skills', JSON.stringify(skills));
 
   };
 
@@ -67,11 +76,13 @@ export function Skills({ data }: SkillsProps) {
                id={`university-${index}`} 
                placeholder="Javascript, Java, Python, C++, C ..." 
                onChange={e => handleChange(index, 'languages', e.target.value)}
+               value={skills[index]?.languages || ''}
                />
               <Label htmlFor="framework">Frameworks</Label>
               <Input
                id={`university-${index}`} placeholder="React, Flask, Django, Angular ..." 
                onChange={e => handleChange(index, 'frameworks', e.target.value)}
+               value={skills[index]?.frameworks || ''}
                
                />
             

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -18,6 +18,17 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
   const [formCount, setFormCount] = useState(1);
   const [projects, setProjects] = useState<Array<{ name: string; language: string; description: string }>>([]);
 
+  useEffect(() => {
+    const storedProjects = localStorage.getItem('projects');
+    if (storedProjects) {
+      setProjects(JSON.parse(storedProjects));
+    }
+
+  },[]);
+
+
+ 
+
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
   };
@@ -33,6 +44,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
   const handleSaveProject = () => {
     console.log("This is handleSaveProject",projects);
     // projects.forEach(project => addProjectData(project));
+    localStorage.setItem('projects', JSON.stringify(projects));
     addProjectData(projects);
   };
 
@@ -51,6 +63,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
                   id={`name-${index}`}
                   placeholder="Name of your project"
                   onChange={e => handleChange(index, 'name', e.target.value)}
+                  value={projects[index]?.name || ''}
                 />
               </div>
               <Label htmlFor={`language-${index}`}>Language</Label>
@@ -58,6 +71,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
                 id={`language-${index}`}
                 placeholder="Typescript, React, Tailwind"
                 onChange={e => handleChange(index, 'language', e.target.value)}
+                value={projects[index]?.language || ''}
               />
 
               <Label htmlFor={`description-${index}`}>Description</Label>
@@ -65,6 +79,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
                 id={`description-${index}`}
                 placeholder="Description of your project"
                 onChange={e => handleChange(index, 'description', e.target.value)}
+                value={projects[index]?.description || ''}
               />
             </div>
           </form>

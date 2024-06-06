@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea"
 import e from "express"
 import { add, set } from "date-fns"
 import { useGlobalContext } from "@/context/global-context"
+import { useEffect } from "react"
 
 interface InfoProps {
     data: {
@@ -34,6 +35,13 @@ export function Info({ data }: InfoProps) {
   const [formCount, setFormCount] = React.useState(1);
   const [personal, setPersonal] = React.useState<Array<{name: string; gpa: string; email: string; city: string; state: string; website: string; github: string; phone: string; linkedin: string }>>([]);
 
+  useEffect(()=>{
+    const storedPersonal = localStorage.getItem('personal');
+    if (storedPersonal) {
+      setPersonal(JSON.parse(storedPersonal));
+    }
+
+  },[])
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
   };
@@ -49,6 +57,7 @@ export function Info({ data }: InfoProps) {
 
   const handleSavePersonal = () => {
     console.log("This is handleSaveEducation",personal);
+    localStorage.setItem('personal', JSON.stringify(personal));
     addPersonalData(personal);
 
   }
@@ -68,6 +77,7 @@ export function Info({ data }: InfoProps) {
                 id="name" 
                 placeholder="John Doe" 
                 onChange={e => handleChange(index, 'name', e.target.value)}
+                value={personal[index]?.name || ''}
 
                 />
                 </div>
@@ -77,6 +87,7 @@ export function Info({ data }: InfoProps) {
                 id={`email-${index}`} 
                 placeholder="Johndoe@gmail.com" 
                 onChange={e => handleChange(index, 'email', e.target.value)}
+                value={personal[index]?.email || ''}
 
                 />
                 </div>
@@ -88,6 +99,7 @@ export function Info({ data }: InfoProps) {
                id={`city-${index}`} 
                placeholder="Cincinnati" 
                onChange={e => handleChange(index, 'city', e.target.value)}
+               value={personal[index]?.city || ''}
 
                
                />
@@ -99,6 +111,7 @@ export function Info({ data }: InfoProps) {
                id={`state-${index}`} 
                placeholder="Ohio" 
                onChange={e => handleChange(index, 'state', e.target.value)}
+                value={personal[index]?.state || ''}
                />
 
                </div>
@@ -110,6 +123,7 @@ export function Info({ data }: InfoProps) {
                id={`website-${index}`} 
                placeholder="https://shivakhatri.com.np" 
                onChange={e => handleChange(index, 'website', e.target.value)}
+                value={personal[index]?.website || ''}
 
                />
                </div>
@@ -120,6 +134,7 @@ export function Info({ data }: InfoProps) {
                 id={`github-${index}`} 
                 placeholder="https://github.com/iamshivakhatri" 
                 onChange={e => handleChange(index, 'github', e.target.value)}
+                value={personal[index]?.github || ''}
 
                 />
                </div>
@@ -130,6 +145,7 @@ export function Info({ data }: InfoProps) {
                id={`phone-${index}`} 
                placeholder="000-000-0000" 
                onChange={e => handleChange(index, 'phone', e.target.value)}
+               value={personal[index]?.phone || ''}
 
                />
                </div>
@@ -140,6 +156,7 @@ export function Info({ data }: InfoProps) {
                id={`linkedin-${index}`}
                 placeholder="https://linkedin.com/iamshivakhatri" 
                 onChange={e => handleChange(index, 'linkedin', e.target.value)}
+                value={personal[index]?.linkedin || ''}
                 
                 />
                </div>

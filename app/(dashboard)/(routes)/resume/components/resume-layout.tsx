@@ -15,7 +15,11 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
   console.log("This is projectData in resume layout", projectData)
 
   return (
-    <div className="w-3/4 h-full">
+    // 826 1066
+    <div className="w-3/4 h-full flex justify-center">
+      <div className=" flex flex-col justify-around" style={{height: '1066px', width: '826px', border: '1px solid black' }}>
+
+      
       <h1>{data.name}</h1>
       <p>{data.email}</p>
 
@@ -93,8 +97,9 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
 
 
 
-
+     </div>
     </div>
+
   );
 };
 
