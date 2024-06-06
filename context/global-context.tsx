@@ -37,6 +37,18 @@ type Education = {
   coursework: string;
 };
 
+type Personal = {
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  state: string;
+  github: string;
+  linkedin: string;
+  website: string;
+};
+
+
 
 type GlobalContextType = {
   userId: string;
@@ -59,6 +71,10 @@ type GlobalContextType = {
   educationData: Education[];
   addEducationData: (education: Education[]) => void;
 
+  //Personal
+  personalData: Personal[];
+  addPersonalData: (personal: Personal[]) => void;
+
 };
 
 const GlobalContext = createContext<GlobalContextType>({
@@ -77,6 +93,9 @@ const GlobalContext = createContext<GlobalContextType>({
 
   educationData: [],
   addEducationData: () => {},
+
+  personalData: [],
+  addPersonalData: () => {},
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -92,6 +111,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
   const [skillsData, setSkillsData] = useState<Skill[]>([]);
   const [experienceData, setExperienceData] = useState<Experience[]>([]);
   const [educationData, setEducationData] = useState<Education[]>([]);
+  const [personalData, setPersonalData] = useState<Personal[]>([]);
 
   useEffect(() => {
     const storedUserData = localStorage.getItem('userData');
@@ -124,11 +144,16 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
     setEducationData(education);
   }
 
+  const addPersonalData = (personal: Personal[]) => {
+    setPersonalData(personal);
+  }
+
 
   return (
     <GlobalContext.Provider value={{ 
       userId, setUserId, projectData, addProjectData, userData, addUserData, setUserData,
       skillsData, addSkillsData , experienceData, addExperienceData, educationData, addEducationData
+      , personalData, addPersonalData
       
       }}>
       {children}

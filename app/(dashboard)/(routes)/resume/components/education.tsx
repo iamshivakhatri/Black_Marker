@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import  {useState} from "react"
+import  {useState, useEffect} from "react"
 import { Textarea } from "@/components/ui/textarea"
+import  DatePicker  from "./datepicker"
 
 interface EducationProps {
     data: {
@@ -28,20 +29,47 @@ export function Education({ data }: EducationProps) {
   const [formCount, setFormCount] = React.useState(1);
   const [education, setEducation] = useState<Array<{university: string; major: string; gpa: string; level: string; graduation_date: string; coursework: string }>>([]);
 
+  useEffect(() => {
+    const storedEducation = localStorage.getItem('education');
+    console.log("this is storedEducation", storedEducation)
+
+    if (storedEducation) {
+      console.log("this is storedEducation inside if clause", storedEducation)
+      setEducation(JSON.parse(storedEducation));
+    }
+    
+  }, [])
+
+
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
   };
 
   const handleChange = (index: number, key: string, value: string) => {
+    if (key === 'graduation_date') {
+      const date = new Date(value);
+      const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      console.log("this is formatted date", formattedDate)
+
+      const updatedEducation = [...education];
+    updatedEducation[index] = {...updatedEducation[index],  [key]: formattedDate};
+    setEducation(updatedEducation);
+    }else{
     console.log("this is value", value)
     const updatedEducation = [...education];
     updatedEducation[index] = {...updatedEducation[index],  [key]: value};
     setEducation(updatedEducation);
+
+    }
+
+    
   };
 
   const handleSaveEducation = () => {
     console.log("This is handleSaveEducation",education);
+    localStorage.setItem('education', JSON.stringify(education));
     addEducationData(education);
+
   };
 
   return (
@@ -58,6 +86,7 @@ export function Education({ data }: EducationProps) {
                id={`university-${index}`} 
                placeholder="Northern Kentucky University"
                onChange= {e => handleChange(index, 'university', e.target.value)}
+               value={education[index]?.university || ""}
                />
                <div className="grid grid-cols-2 gap-x-2 gap-y-4">
                 <div className="space-y-2">
@@ -66,6 +95,7 @@ export function Education({ data }: EducationProps) {
                id={`major-${index}`} 
                placeholder="Computer Science" 
                onChange= {e => handleChange(index, 'major', e.target.value)}
+               value={education[index]?.major || ""}
 
                />
                </div>
@@ -75,6 +105,8 @@ export function Education({ data }: EducationProps) {
                 id={`grade-${index}`}
                  placeholder="3.85"
                  onChange= {e => handleChange(index, 'gpa', e.target.value)}
+                 value = {education[index]?.gpa || ""}
+
 
                  />
                </div>
@@ -85,19 +117,23 @@ export function Education({ data }: EducationProps) {
                id={`level-${index}`} 
                placeholder="Bachelors"
                onChange= {e => handleChange(index, 'level', e.target.value)}
+               value = {education[index]?.level || ""}
 
                />
                </div>
 
                <div className="space-y-2">
                 <Label htmlFor="framework">Graduation</Label>
-               <Input
+               {/* <Input
                 id={`grade-${index}`} 
                 placeholder="Anticipated Graduation" 
                 onChange= {e => handleChange(index, 'graduation_date', e.target.value)}
-
-                
+                /> */}
+                 <DatePicker
+                  selectedDate={education[index]?.graduation_date|| undefined}
+                  onSelectDate={date => handleChange(index, 'graduation_date', date as any)}
                 />
+
                </div>
                
                </div>
@@ -106,6 +142,7 @@ export function Education({ data }: EducationProps) {
                id={`course-description-${index}`}
                 placeholder="Data Structure and Algorithm, Object Oriented Programming.." 
                 onChange= {e => handleChange(index, 'coursework', e.target.value)}
+                value = {education[index]?.coursework || ""}
                 />
             </div>
           </form>

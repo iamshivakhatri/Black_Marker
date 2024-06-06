@@ -80,8 +80,8 @@ export function ResumeForm() {
     return (
        
         <div className="space-y-5 my-5">
+        <Info data={{ type: "Personal Info" }}/>  
         <Education data = {{type:"Education"}}/>
-        <Info data={{ type: "Personal Info" }}/>
         <Experience data={{ type: "Experience" }}/>
         <Projects data={{ type: "Projects" }}/>
         <Skills data={{ type: "Skills" }}/>
