@@ -11,7 +11,7 @@ interface ResumeLayoutProps {
 }
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
-  const { projectData, skillsData, experienceData } = useGlobalContext();
+  const { projectData, skillsData, experienceData, educationData } = useGlobalContext();
   console.log("This is projectData in resume layout", projectData)
 
   return (
@@ -25,6 +25,16 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
 
       {/* Education */}
       <h1> Education </h1>
+      {educationData.map((education, index) => (
+        <div key={index}>
+          <h1>{education.university}</h1>
+          <p>Degree: {education.major}</p>
+          <p>Level: {education.level}</p>
+          <p>Graduation Date: {education.graduation_date}</p>
+          <p>Coursework: {education.coursework}</p>
+        </div>
+      ))}
+
 
        <div className="border-b  mt-2 mb-2" > </div>   
        {/* Experience */}
