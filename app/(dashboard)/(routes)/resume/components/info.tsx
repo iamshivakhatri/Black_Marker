@@ -47,8 +47,6 @@ export function Info({ data }: InfoProps) {
   };
 
   const handleChange = (index: number, key: string, value: string) => {
-    console.log("this is value", value)
-    console.log("this is key", key)
     const updatedPersonal = [...personal];
     updatedPersonal[index] = {...updatedPersonal[index],  [key]: value};
     setPersonal(updatedPersonal);
@@ -56,7 +54,6 @@ export function Info({ data }: InfoProps) {
   }
 
   const handleSavePersonal = () => {
-    console.log("This is handleSaveEducation",personal);
     localStorage.setItem('personal', JSON.stringify(personal));
     addPersonalData(personal);
 

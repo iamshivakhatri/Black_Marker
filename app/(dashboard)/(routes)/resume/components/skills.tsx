@@ -48,7 +48,6 @@ export function Skills({ data }: SkillsProps) {
 
 
   const handleChange = (index: number, key: string, value: string) => {
-    console.log("This is key", key);
     const updatedSkills = [...skills];
     updatedSkills[index] = { ...updatedSkills[index], [key]: value };
     setSkills(updatedSkills);

@@ -35,9 +35,7 @@ export function Experience({ data }: ExperienceProps) {
 
   useEffect(() => {
     const storedExperience = localStorage.getItem('experiences');
-    console.log("this is storedExperience", storedExperience)
     if (storedExperience) {
-      console.log("this is storedEducation inside if clause", storedExperience)
       setExperiences(JSON.parse(storedExperience));
     }
     
@@ -51,9 +49,7 @@ export function Experience({ data }: ExperienceProps) {
   };
 
   const handleSaveExperience = () => {
-    console.log("This is handleSaveExperience",experiences);
     localStorage.setItem('experiences', JSON.stringify(experiences));
-
     addExperienceData(experiences);
     toast.success('Experience Saved');
 
@@ -64,7 +60,6 @@ export function Experience({ data }: ExperienceProps) {
     if (key === 'start_date' || key === 'end_date') {
       const date = new Date(value);
       const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-      console.log("this is formatted date", formattedDate)
 
       const updatedExperience = [...experiences];
       updatedExperience[index] = {...updatedExperience[index], [key]: formattedDate};
@@ -73,7 +68,6 @@ export function Experience({ data }: ExperienceProps) {
       const updatedExperience = [...experiences];
       updatedExperience[index] = {...updatedExperience[index], [key]: value};
       setExperiences(updatedExperience);
-      console.log("this is value", value)
 
     }
 

@@ -31,10 +31,8 @@ export function Education({ data }: EducationProps) {
 
   useEffect(() => {
     const storedEducation = localStorage.getItem('education');
-    console.log("this is storedEducation", storedEducation)
 
     if (storedEducation) {
-      console.log("this is storedEducation inside if clause", storedEducation)
       setEducation(JSON.parse(storedEducation));
     }
     
@@ -49,13 +47,11 @@ export function Education({ data }: EducationProps) {
     if (key === 'graduation_date') {
       const date = new Date(value);
       const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-      console.log("this is formatted date", formattedDate)
 
       const updatedEducation = [...education];
     updatedEducation[index] = {...updatedEducation[index],  [key]: formattedDate};
     setEducation(updatedEducation);
     }else{
-    console.log("this is value", value)
     const updatedEducation = [...education];
     updatedEducation[index] = {...updatedEducation[index],  [key]: value};
     setEducation(updatedEducation);
@@ -66,7 +62,6 @@ export function Education({ data }: EducationProps) {
   };
 
   const handleSaveEducation = () => {
-    console.log("This is handleSaveEducation",education);
     localStorage.setItem('education', JSON.stringify(education));
     addEducationData(education);
 

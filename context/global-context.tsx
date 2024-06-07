@@ -113,18 +113,47 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
   const [educationData, setEducationData] = useState<Education[]>([]);
   const [personalData, setPersonalData] = useState<Personal[]>([]);
 
+  // Load data from localStorage on component mount
   useEffect(() => {
+    const storedProjectData = localStorage.getItem('projectData');
+    console.log('This is the storedProjectData:', storedProjectData);
+    if (storedProjectData) {
+      setProjectData(JSON.parse(storedProjectData));
+    
+    }
+
+    const storedSkillsData = localStorage.getItem('skillsData');
+    if (storedSkillsData) {
+      setSkillsData(JSON.parse(storedSkillsData));
+    }
+
+    const storedExperienceData = localStorage.getItem('experienceData');
+    if (storedExperienceData) {
+      setExperienceData(JSON.parse(storedExperienceData));
+    }
+
+    const storedEducationData = localStorage.getItem('educationData');
+    if (storedEducationData) {
+      setEducationData(JSON.parse(storedEducationData));
+    }
+
+    const storedPersonalData = localStorage.getItem('personalData');
+    console.log('This is the storedPersonalData:', storedPersonalData)
+    if (storedPersonalData) {
+      setPersonalData(JSON.parse(storedPersonalData));
+    }
+
     const storedUserData = localStorage.getItem('userData');
-    console.log('This is the storedUserData:', storedUserData);
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
     }
   }, []);
 
+
+
   const addProjectData = (projects: ProjectDataType[]) => {
-    console.log('This is the project:', projects);
     setProjectData(projects);
-    console.log('This is the projectData:', projectData);
+    localStorage.setItem('projectData', JSON.stringify(projects));
   };
 
   const addUserData = (userDataItem: UserData) => {
@@ -134,18 +163,26 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
 
   const addSkillsData = (skills: Skill[]) => {
     setSkillsData(skills);
+    localStorage.setItem('skillsData', JSON.stringify(skills));
+
   }
 
   const addExperienceData = (experience: Experience[]) => {
     setExperienceData(experience);
+    localStorage.setItem('experienceData', JSON.stringify(experience));
+
   }
 
   const addEducationData = (education: Education[]) => {
     setEducationData(education);
+    localStorage.setItem('educationData', JSON.stringify(education));
+
   }
 
   const addPersonalData = (personal: Personal[]) => {
     setPersonalData(personal);
+    localStorage.setItem('personalData', JSON.stringify(personal));
+
   }
 
 

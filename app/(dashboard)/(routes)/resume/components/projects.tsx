@@ -36,13 +36,11 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
   const handleChange = (index: number, key: string, value: string) => {
   
     const updatedProjects = [...projects];
-    console.log("spread operator", { ...updatedProjects[index]});
     updatedProjects[index] = { ...updatedProjects[index], [key]: value };
     setProjects(updatedProjects);
   };
 
   const handleSaveProject = () => {
-    console.log("This is handleSaveProject",projects);
     // projects.forEach(project => addProjectData(project));
     localStorage.setItem('projects', JSON.stringify(projects));
     addProjectData(projects);

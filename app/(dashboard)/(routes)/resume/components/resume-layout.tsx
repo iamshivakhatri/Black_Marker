@@ -12,7 +12,7 @@ interface ResumeLayoutProps {
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
   const { projectData, skillsData, experienceData, educationData, personalData } = useGlobalContext();
-  console.log("This is projectData in resume layout", projectData)
+
 
   return (
     // 826 1066
