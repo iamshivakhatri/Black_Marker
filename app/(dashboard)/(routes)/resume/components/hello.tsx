@@ -1,7 +1,7 @@
 import React from 'react'
 import { useGlobalContext } from '@/context/global-context'
 
-function hello() {
+function Hello() {
     const { projectData, skillsData, experienceData, educationData, personalData } = useGlobalContext();
     console.log("This is projectData in hello ", projectData)
     console.log("This is skillsData in hello", skillsData)
@@ -11,9 +11,9 @@ function hello() {
   
   return (
     <div>
-      
+      HELLO WORLD
     </div>
   )
 }
 
-export default hello
+export default Hello
