@@ -54,6 +54,14 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
     addProjectData([]);
   }
 
+  const handleDeleteExperience = (index: number) => {
+    const updatedProjects = projects.filter((_, i) => i !== index);
+    localStorage.setItem('projects', JSON.stringify(updatedProjects));
+    setProjects(updatedProjects);
+    setFormCount(prevCount => prevCount - 1);
+    addProjectData(updatedProjects);
+  };
+
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
       <CardHeader>
@@ -67,7 +75,12 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
           <form key={index}>
             <div className="grid w-full items-center gap-4 mb-5">
               <div className="flex flex-col space-y-1.5">
+                <div className='flex justify-between items-center'> 
                 <Label htmlFor={`name-${index}`}>Name</Label>
+                <Button className="text-red-500" onClick={() => handleDeleteExperience(index)}>-</Button>
+                </div>
+
+                
                 <Input
                   id={`name-${index}`}
                   placeholder="Name of your project"
@@ -91,6 +104,8 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
                 value={projects[index]?.description || ''}
               />
             </div>
+            {index < formCount - 1 && <hr className="border-gray-600 mb-5" />}
+
           </form>
         ))}
       </CardContent>

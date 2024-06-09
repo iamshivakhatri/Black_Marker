@@ -16,6 +16,7 @@ import { useGlobalContext } from '@/context/global-context';
 import DatePicker from "./datepicker";
 import { Delete } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { setPriority } from "os";
 
 interface ExperienceProps {
   data: {
@@ -78,6 +79,14 @@ export function Experience({ data }: ExperienceProps) {
     setExperiences([]);
     addExperienceData([]);
   };
+  const handleDeleteExperience = (index: number) => {
+    const updatedExperiences = experiences.filter((_, i) => i !== index);
+    localStorage.setItem('experiences', JSON.stringify(updatedExperiences));
+    setExperiences(updatedExperiences);
+    setFormCount(prevCount => prevCount - 1);
+    addExperienceData(updatedExperiences);
+    
+  };
 
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
@@ -91,15 +100,25 @@ export function Experience({ data }: ExperienceProps) {
         {[...Array(formCount)].map((_, index) => (
           <form key={index}>
             <div className="grid w-full items-center gap-4 mb-5">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor={`name-${index}`}>Title</Label>
-                <Input
-                  id={`title-${index}`}
-                  placeholder="Software Engineering Intern"
-                  onChange={e => handleChange(index, 'title', e.target.value)}
-                  value={experiences[index]?.title || ""}
-                />
-              </div>
+
+              <div className="flex items-center">
+                <div className="flex flex-col space-y-1.5 flex-grow">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor={`name-${index}`}>Title</Label>
+                    <Button className="text-red-500" onClick={() => handleDeleteExperience(index)}>-</Button>
+                  </div>
+                  <Input 
+                    className="w-full"
+                    id={`title-${index}`}
+                    placeholder="Software Engineering Intern"
+                    onChange={e => handleChange(index, 'title', e.target.value)}
+                    value={experiences[index]?.title || ""}
+                  />
+                </div>
+            </div>
+
+
+
               <div className="grid grid-cols-2 gap-x-2">
                 <div>
                   <Label htmlFor={`company-name-${index}`}>Company Name</Label>
@@ -147,6 +166,8 @@ export function Experience({ data }: ExperienceProps) {
                 value={experiences[index]?.detailed_experience || ""}
               />
             </div>
+            {index < formCount - 1 && <hr className="border-gray-600 mb-5" />}
+
           </form>
         ))}
       </CardContent>

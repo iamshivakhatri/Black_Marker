@@ -23,8 +23,8 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
   return (
     // 826 1066
     <div className=" md:w-2/4 2xl:w-3/4  flex justify-center">
-  
-      <PDFViewer  width="826px" height="1086px" style={{ border: '1px solid red', margin: '20px 0' }}>
+      <div className="w-full max-w-screen-md">
+      <PDFViewer  style={{  margin: '20px 0', width: '100%', height:'100%'}}>
         <MyDocument 
           projectData={projectData}
           skillsData={skillsData}
@@ -35,6 +35,7 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
           fontSize={fontSize}
         />
       </PDFViewer>
+      </div>
 
 
 
