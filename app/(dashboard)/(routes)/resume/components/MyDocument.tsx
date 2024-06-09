@@ -1,6 +1,7 @@
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 import React from 'react';
 
+
 // Register fonts
 Font.register({
   family: 'Roboto',
@@ -30,11 +31,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     width: 1000,
     scale: 1.2,
+    paddingLeft: 30,
+    paddingRight: 30,
   },
   outerSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   innerSectionLeft:{
     fontSize: 10,
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     marginRight:0
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   sectionHorizontal: {
     display: 'flex',
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     gap:4
   },
   header: {
-    fontSize: 24,
+    fontSize: 22,
     marginBottom: 2,
   },
   subHeaderContainer: {
@@ -64,9 +67,10 @@ const styles = StyleSheet.create({
   },
   subHeader: {
     color: 'maroon',
-    fontSize: 18,
-    marginBottom: 5,
+    fontSize: 14,
+    marginBottom: 2,
     marginRight: 5,
+    fontWeight: 'bold',
   },
   horizontalLine: {
     borderBottomWidth: 1,
@@ -74,14 +78,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   text: {
-    fontSize: 12,
-    marginBottom: 5,
+    fontSize: 10.5,
+    marginBottom: 3,  // Reduced margin
     fontWeight: 'normal',
   },
   textHeader: { 
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
-    marginBottom: 5,
   },
 
   topLine:{
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
 // Create Document Component
 const MyDocument: React.FC<MyDocumentProps> = ({ projectData, skillsData, experienceData, educationData, personalData }) => (
   <Document>
-    <Page size={{ width: 800, height: 1066 }} style={styles.page}  >
+    <Page size={{ width: 612, height: 792}} style={styles.page}  >
       <View style={styles.outerSection}>
       <View style={styles.innerSectionLeft}>
         <Text style={styles.header}>{personalData[0]?.name}</Text>
@@ -138,7 +141,6 @@ const MyDocument: React.FC<MyDocumentProps> = ({ projectData, skillsData, experi
      
 
       <View style={styles.section}>
-
         <View style={styles.subHeaderContainer}>
           <Text style={styles.subHeader}>Education</Text>
           <View style={styles.horizontalLine} />
@@ -148,9 +150,10 @@ const MyDocument: React.FC<MyDocumentProps> = ({ projectData, skillsData, experi
           <View key={index}>
             <View style={styles.topLine}> 
               <Text  style={styles.textHeader}>{education.university}</Text>
-              <Text style={styles.text}>{education.major},{education.level}</Text>
+              <Text style={styles.text}>{education.major}, {education.level}</Text>
               <Text style={styles.text}>{education.graduation_date}</Text>
             </View>
+
             <Text style={styles.text}>Coursework: {education.coursework}</Text>
           </View>
         ))}
@@ -170,7 +173,6 @@ const MyDocument: React.FC<MyDocumentProps> = ({ projectData, skillsData, experi
         </View>
 
 
-
         {experienceData.map((experience, index) => (
           <View key={index}>
             <View style={styles.topLine}>
@@ -178,8 +180,10 @@ const MyDocument: React.FC<MyDocumentProps> = ({ projectData, skillsData, experi
               <Text style={styles.text}>{experience.company}</Text>
               <Text style={styles.text}>{experience.start_date}-{experience.end_date}</Text>
             </View>
-            <Text style={styles.text}>{experience.detailed_experience}</Text>
-          </View>
+            {experience.detailed_experience.split('\n').map((line: string, i: number) => (
+              <Text key={i} style={styles.text}>•  {line}</Text>
+            ))}
+            </View>
         ))}
       </View>
 
@@ -195,9 +199,9 @@ const MyDocument: React.FC<MyDocumentProps> = ({ projectData, skillsData, experi
             <Text style={styles.textHeader}>{project.name} -</Text>
             <Text style={styles.text}> {project.language}</Text>
           </View>
-
-
-            <Text style={styles.text}>{project.description}</Text>
+          {project.description.split('\n').map((line: string, i: number) => (
+              <Text key={i} style={styles.text}>•  {line}</Text>
+          ))}
           </View>
         ))}
 
