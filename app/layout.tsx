@@ -23,7 +23,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <GlobalContextProvider>
           <ToastProvider />
+          <div id="root-container">
           {children}
+          </div>
+          
         </GlobalContextProvider>
       </body>
     </html>

@@ -20,14 +20,13 @@ const Resume = () => {
     };
 
     return (
-  <div className="mx-auto md:max-w-7xl flex sm:flex lg:flex lg:max-w-7xl xl:max-w-[90vw] 2xl:max-w-14xl space-x-5 space-y-5">
-
-            <ResumeInput  onChange={handleInputChange} />
-            <ResumeLayout data={resumeData} />
-            <div>
-
-            </div>
-        </div>
+        <div
+         className="mx-auto md:max-w-7xl flex flex-col md:flex-row lg:max-w-7xl xl:max-w-[90vw] 2xl:max-w-14xl "
+        
+        >
+        <ResumeInput onChange={handleInputChange} />
+        <ResumeLayout data={resumeData} />
+    </div>
     );
 };
 

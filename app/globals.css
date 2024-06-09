@@ -3,12 +3,20 @@
 @tailwind utilities;
 
 /* styles/globals.css */
-@import url("https://fonts.googleapis.com/css2?family=Cairo&display=swap");
 
 body, html, :root {
   height: 100%;
-  font-family: 'Carlito', sans-serif;
 }
+
+body{
+  overflow: hidden;
+}
+
+#root-container {
+  overflow-y: auto;
+  height: 100vh;
+}
+
 
 @layer base {
   :root {

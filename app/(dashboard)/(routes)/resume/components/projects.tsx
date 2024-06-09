@@ -24,6 +24,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
     const storedProjects = localStorage.getItem('projects');
     if (storedProjects) {
       setProjects(JSON.parse(storedProjects));
+      setFormCount(JSON.parse(storedProjects).length);
     }
 
   },[]);

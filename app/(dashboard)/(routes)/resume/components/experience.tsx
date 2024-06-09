@@ -32,7 +32,9 @@ export function Experience({ data }: ExperienceProps) {
     const storedExperience = localStorage.getItem('experiences');
     if (storedExperience) {
       setExperiences(JSON.parse(storedExperience));
+      setFormCount(JSON.parse(storedExperience).length);
     }
+
   }, []);
 
   const handleAddForm = () => {
