@@ -59,9 +59,13 @@ const MyDocument: React.FC<MyDocumentProps> = ({
       fontSize: 10,
     },
     innerSectionRight: {
-      fontSize: 10.5,
+      fontSize: fontSize,
+      display: 'flex',
       flexDirection: 'column',
-      marginRight: 0
+      alignItems: 'flex-end',
+    },
+    textRight: {
+      textAlign: 'right',
     },
     section: {
       marginBottom: 5,
@@ -156,11 +160,15 @@ const MyDocument: React.FC<MyDocumentProps> = ({
               <Text>{personalData[0]?.email}</Text>
             </View>
           </View>
-          <View style={styles.innerSectionRight}>
-            <Text> {personalData[0]?.website}</Text>
-            <Text> {personalData[0]?.github}</Text>
-            <Text> {personalData[0]?.linkedin}</Text>
-          </View>
+
+
+        <View style={styles.innerSectionRight}>
+          <Text style={styles.textRight}>{personalData[0]?.website}</Text>
+          <Text style={styles.textRight}>{personalData[0]?.github}</Text>
+          <Text style={styles.textRight}>{personalData[0]?.linkedin}</Text>
+        </View>
+
+
         </View>
 
         <View style={styles.section}>

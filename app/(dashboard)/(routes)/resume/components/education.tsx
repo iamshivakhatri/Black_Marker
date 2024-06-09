@@ -121,7 +121,7 @@ export function Education({ data }: EducationProps) {
                 <Label htmlFor="framework">Level</Label>
                <Input 
                id={`level-${index}`} 
-               placeholder="Bachelors"
+               placeholder="BS"
                onChange= {e => handleChange(index, 'level', e.target.value)}
                value = {education[index]?.level || ""}
 

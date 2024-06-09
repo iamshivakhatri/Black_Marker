@@ -11,7 +11,7 @@ export const MainNav = ({className, ...props}: React.HTMLAttributes<HTMLElement>
     const routes =[
         {
             href: "/",
-            label: "Home",
+            label: "Black Marker",
             active: pathname === "/"
         },
         {

@@ -21,8 +21,7 @@ const Resume = () => {
 
     return (
         <div
-         className="mx-auto md:max-w-7xl flex flex-col md:flex-row lg:max-w-7xl xl:max-w-[90vw] 2xl:max-w-14xl gap-10 mb-20"
-        
+         className="mx-auto flex flex-col md:flex-row lg:max-w-7xl xl:max-w-[90vw] 2xl:max-w-14xl gap-10 mb-20"
         >
         <ResumeInput onChange={handleInputChange} />
         <ResumeLayout data={resumeData} />
