@@ -75,6 +75,14 @@ type GlobalContextType = {
   personalData: Personal[];
   addPersonalData: (personal: Personal[]) => void;
 
+  // font
+  font: string;
+  addFont: (font: string) => void;
+
+  // font size
+  fontSize: number;
+  addFontSize: (fontSize: number) => void;
+
 };
 
 const GlobalContext = createContext<GlobalContextType>({
@@ -96,6 +104,12 @@ const GlobalContext = createContext<GlobalContextType>({
 
   personalData: [],
   addPersonalData: () => {},
+
+  font: '',
+  addFont: () => {},
+
+  fontSize: 0,
+  addFontSize: () => {},
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
@@ -112,6 +126,8 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
   const [experienceData, setExperienceData] = useState<Experience[]>([]);
   const [educationData, setEducationData] = useState<Education[]>([]);
   const [personalData, setPersonalData] = useState<Personal[]>([]);
+  const [font, setFont] = useState('');
+  const [fontSize, setFontSize] = useState(0);
 
   // Load data from localStorage on component mount
   useEffect(() => {
@@ -146,8 +162,21 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
     const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
+
+    }
+
+    const storedFont = localStorage.getItem('font');
+    if (storedFont) {
+      setFont(JSON.parse(storedFont));
+    }
+
+    const storedFontSize = localStorage.getItem('fontSize');
+    if (storedFontSize) {
+      setFontSize(JSON.parse(storedFontSize));
     }
   }, []);
+
+
 
 
 
@@ -185,12 +214,25 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
 
   }
 
+  const addFont = (font: string) => {
+    console.log('This is the font:', font);
+    setFont(font);
+    localStorage.setItem('font', JSON.stringify(font));
+
+  }
+
+  const addFontSize = (fontSize: number) => {
+    console.log('This is the fontSize:', fontSize);
+    setFontSize(fontSize);
+    localStorage.setItem('fontSize', JSON.stringify(fontSize));
+  }
+
 
   return (
     <GlobalContext.Provider value={{ 
       userId, setUserId, projectData, addProjectData, userData, addUserData, setUserData,
       skillsData, addSkillsData , experienceData, addExperienceData, educationData, addEducationData
-      , personalData, addPersonalData
+      , personalData, addPersonalData, font, addFont, fontSize, addFontSize
       
       }}>
       {children}

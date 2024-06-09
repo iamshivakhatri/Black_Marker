@@ -18,6 +18,7 @@ import { Projects } from "./projects"
 import { Education } from "./education"
 import { Info } from "./info"
 import { Skills } from "./skills"
+import LayoutTools from "./LayoutTools"
 
 import { useGlobalContext } from "@/context/global-context"
 import { useEffect } from "react"
@@ -69,13 +70,9 @@ export function ResumeForm() {
         console.log(values);
     }
 
-    const {userId, setUserId } = useGlobalContext();
 
   
 
-    const handleChange = (e) => {
-      setUserId(e.target.value)
-    }
       
     return (
        
@@ -85,13 +82,7 @@ export function ResumeForm() {
         <Experience data={{ type: "Experience" }}/>
         <Projects data={{ type: "Projects" }}/>
         <Skills data={{ type: "Skills" }}/>
-        <div>
-          <p>User ID: {userId}</p>
-          
-        </div>
-
-          <input type="text" onChange={handleChange}/>
-
+        <LayoutTools />
 
         </div>
         

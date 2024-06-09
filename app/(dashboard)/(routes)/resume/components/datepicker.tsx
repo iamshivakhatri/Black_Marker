@@ -1,14 +1,10 @@
-import React from 'react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import React, { useState, useEffect } from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import { startOfMonth, endOfMonth } from 'date-fns';
+import { format, isSameMonth } from "date-fns";
+import { startOfMonth } from 'date-fns';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './datepicker.css';
@@ -16,26 +12,31 @@ import './datepicker.css';
 interface DatePickerProps {
   selectedDate: string | undefined;
   onSelectDate: (date: Date | undefined) => void;
+  disabled?: boolean; // Added disabled prop
 }
 
+const DatePicker: React.FC<DatePickerProps> = ({ selectedDate, onSelectDate, disabled }) => {
+  const [date, setDate] = useState<Date | undefined>(selectedDate ? new Date(selectedDate) : undefined);
+  const [isPresent, setIsPresent] = useState<boolean>(false);
 
-
-const DatePicker: React.FC<DatePickerProps> = ({ selectedDate, onSelectDate }) => {
-const [date, setDate] = React.useState<Date | undefined>(selectedDate ? new Date(selectedDate) : undefined);
-
-React.useEffect(() => {
+  useEffect(() => {
     setDate(selectedDate ? new Date(selectedDate) : undefined);
-}, [selectedDate]);
+  }, [selectedDate]);
 
-  const handleDateChange = (newDate?: Date) => {
+  const handleDateChange = (newDate: Date | null) => {
     if (newDate) {
-      // Set the date to the start of the selected month
-      const startOfMonthDate = startOfMonth(newDate);
-      setDate(startOfMonthDate);
-      onSelectDate(startOfMonthDate);
+      setDate(newDate);
+      onSelectDate(newDate);
     } else {
       setDate(undefined);
       onSelectDate(undefined);
+    }
+  };
+
+  const handlePresentChange = () => {
+    setIsPresent(!isPresent);
+    if (!isPresent) {
+      onSelectDate(undefined); // Reset date when selecting Present
     }
   };
 
@@ -48,30 +49,31 @@ React.useEffect(() => {
             "w-[180px] justify-start text-left font-normal",
             !date && "text-muted-foreground"
           )}
+          disabled={disabled} // Button disabled when disabled prop is true
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "MMM yyyy") : <span>Pick a date</span>}
+          {date && !isPresent ? format(date, "MMM yyyy") : "Present"}
         </Button>
       </PopoverTrigger>
-    <PopoverContent className="w-auto p-0">
-        {/* <Calendar
-            mode="single"
-            selected={date || undefined}
-            onSelect={handleDateChange}
-            initialFocus
-            showOutsideDays={false}
-            fixedWeeks
-            showMonthsOnly 
-        /> */}
+      <PopoverContent className="w-auto p-0">
         <ReactDatePicker
           selected={date}
-          onChange={handleDateChange as any}
+          onChange={handleDateChange}
           dateFormat="MM/yyyy"
           showMonthYearPicker
           showFullMonthYearPicker
           inline
+          disabled={disabled || isPresent} // Disable the date picker when Present is selected
         />
-    </PopoverContent>
+        <label>
+          <input
+            type="checkbox"
+            checked={isPresent}
+            onChange={handlePresentChange}
+          />
+          Present
+        </label>
+      </PopoverContent>
     </Popover>
   );
 };

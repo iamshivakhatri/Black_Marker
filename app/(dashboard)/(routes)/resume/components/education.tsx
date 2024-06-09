@@ -23,6 +23,8 @@ interface EducationProps {
 
 import { useGlobalContext } from "@/context/global-context"
 import { set } from "date-fns"
+import { Delete } from 'lucide-react';
+
 
 export function Education({ data }: EducationProps) {
   const {addEducationData} = useGlobalContext();
@@ -67,10 +69,19 @@ export function Education({ data }: EducationProps) {
 
   };
 
+  const handleDeleteAll = () => {
+    localStorage.removeItem("education");
+    setEducation([]);
+    addEducationData([]);
+  }
+
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
       <CardHeader>
+        <div className="flex justify-between">
         <CardTitle>{data.type}</CardTitle>
+        <Delete  className="cursor-pointer" size={24} onClick={handleDeleteAll}  />
+        </div>
       </CardHeader>
       <CardContent>
         {[...Array(formCount)].map((_, index) => (

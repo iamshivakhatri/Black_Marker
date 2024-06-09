@@ -15,7 +15,9 @@ interface ResumeLayoutProps {
 const PDFViewer = dynamic(() => import("@react-pdf/renderer").then(mod => mod.PDFViewer), { ssr: false });
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
-  const { projectData, skillsData, experienceData, educationData, personalData } = useGlobalContext();
+  const { projectData, skillsData, experienceData, educationData, personalData, font, fontSize } = useGlobalContext();
+  console.log('This is the font:', font);
+  console.log('This is the fontSize:', fontSize);
 
 
   return (
@@ -29,6 +31,8 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
           experienceData={experienceData}
           educationData={educationData}
           personalData={personalData}
+          font={font}
+          fontSize={fontSize}
         />
       </PDFViewer>
 

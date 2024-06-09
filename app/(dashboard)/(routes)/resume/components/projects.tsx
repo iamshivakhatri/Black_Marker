@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useGlobalContext } from '@/context/global-context';
+import { add } from 'date-fns';
+import { Delete } from 'lucide-react';
 
 interface ProjectsProps {
   data: {
@@ -45,11 +47,19 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
     localStorage.setItem('projects', JSON.stringify(projects));
     addProjectData(projects);
   };
+  const handleDeleteAll = () => {
+    localStorage.removeItem('projects');
+    setProjects([]);
+    addProjectData([]);
+  }
 
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
       <CardHeader>
+        <div className="flex justify-between">
         <CardTitle>{data.type}</CardTitle>
+        <Delete  className="cursor-pointer" size={24} onClick={handleDeleteAll}  />
+        </div>
       </CardHeader>
       <CardContent>
         {[...Array(formCount)].map((_, index) => (

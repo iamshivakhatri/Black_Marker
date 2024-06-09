@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useGlobalContext } from '@/context/global-context';
 import { useState, useEffect } from "react";
 import { set } from "react-hook-form"
+import { Delete } from 'lucide-react';
 
 
 
@@ -60,11 +61,20 @@ export function Skills({ data }: SkillsProps) {
 
   };
 
+  const handleDeleteAll = () => {
+    setSkills([]);
+    localStorage.removeItem('skills');
+    addSkillsData([]);
+  }
+
 
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
       <CardHeader>
+      <div className="flex justify-between">
         <CardTitle>{data.type}</CardTitle>
+        <Delete  className="cursor-pointer" size={24} onClick={handleDeleteAll}  />
+        </div>
       </CardHeader>
       <CardContent>
         {[...Array(formCount)].map((_, index) => (

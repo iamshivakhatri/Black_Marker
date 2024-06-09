@@ -1,47 +1,39 @@
-import * as React from "react"
-import { toast } from "react-hot-toast"
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { toast } from "react-hot-toast";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-
-import { Textarea } from "@/components/ui/textarea"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect } from "react";
 import { useGlobalContext } from '@/context/global-context';
-import  DatePicker from "./datepicker"
-
-
-
+import DatePicker from "./datepicker";
+import { Delete } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 
 interface ExperienceProps {
-    data: {
-        type: string
-    }
+  data: {
+    type: string;
+  };
 }
 
 export function Experience({ data }: ExperienceProps) {
-  const {addExperienceData} = useGlobalContext();
+  const { addExperienceData } = useGlobalContext();
   const [formCount, setFormCount] = React.useState(1);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [experiences, setExperiences] = useState<Array<{ title: string; company: string; start_date: string; end_date: string; detailed_experience: string }>>([]);
-
+  const [experiences, setExperiences] = useState<Array<{ title: string; company: string; start_date: string; end_date: string; detailed_experience: string; isEndPresent: boolean }>>([]);
 
   useEffect(() => {
     const storedExperience = localStorage.getItem('experiences');
     if (storedExperience) {
       setExperiences(JSON.parse(storedExperience));
     }
-    
-  }, [])
-
-
+  }, []);
 
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
@@ -52,92 +44,106 @@ export function Experience({ data }: ExperienceProps) {
     localStorage.setItem('experiences', JSON.stringify(experiences));
     addExperienceData(experiences);
     toast.success('Experience Saved');
+  };
 
-
-  }
-
-  const handleChange = (index: number, key: string, value: string) => {
+  const handleChange = (index: number, key: string, value: string | Date) => {
+    const updatedExperiences = [...experiences];
     if (key === 'start_date' || key === 'end_date') {
-      const date = new Date(value);
+      const date = new Date(value as string);
       const formattedDate = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-
-      const updatedExperience = [...experiences];
-      updatedExperience[index] = {...updatedExperience[index], [key]: formattedDate};
-      setExperiences(updatedExperience);
-    } else{
-      const updatedExperience = [...experiences];
-      updatedExperience[index] = {...updatedExperience[index], [key]: value};
-      setExperiences(updatedExperience);
-
+      updatedExperiences[index] = { ...updatedExperiences[index], [key]: formattedDate };
+    } else {
+      updatedExperiences[index] = { ...updatedExperiences[index], [key]: value };
     }
+    setExperiences(updatedExperiences);
+  };
 
+  const handleCheckboxChange = (index: number) => {
+    console.log("index",index);
+    const updatedExperiences = [...experiences];
+    const isEndPresent = !updatedExperiences[index].isEndPresent;
+    updatedExperiences[index] = {
+      ...updatedExperiences[index],
+      isEndPresent,
+      end_date: isEndPresent ? 'Present' : ''
+    };
+    console.log("onchange",updatedExperiences);
+    setExperiences(updatedExperiences);
+  };
 
-
-    
-  }
-
-
+  const handleDeleteAll = () => {
+    localStorage.removeItem("experiences");
+    setExperiences([]);
+    addExperienceData([]);
+  };
 
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
       <CardHeader>
-        <CardTitle>{data.type}</CardTitle>
+        <div className="flex justify-between">
+          <CardTitle>{data.type}</CardTitle>
+          <Delete className="cursor-pointer" size={24} onClick={handleDeleteAll} />
+        </div>
       </CardHeader>
       <CardContent>
         {[...Array(formCount)].map((_, index) => (
-          <form key={index} >
+          <form key={index}>
             <div className="grid w-full items-center gap-4 mb-5">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor={`name-${index}`}>Title</Label>
-                <Input 
-                id={`title-${index}`} 
-                placeholder="Software Engineering Intern" 
-                onChange={e => handleChange(index, 'title', e.target.value)}
-                value={experiences[index]?.title || ""}
-                
+                <Input
+                  id={`title-${index}`}
+                  placeholder="Software Engineering Intern"
+                  onChange={e => handleChange(index, 'title', e.target.value)}
+                  value={experiences[index]?.title || ""}
                 />
               </div>
               <div className="grid grid-cols-2 gap-x-2">
                 <div>
-                <Label htmlFor={`company-name-${index}`}>Company Name</Label>
-                 <Input 
-                 id={`company-name-${index}`} placeholder="Google" 
-                 onChange={e => handleChange(index, 'company', e.target.value)}
-                 value={experiences[index]?.company || ""}
-                 
-                 />
-
+                  <Label htmlFor={`company-name-${index}`}>Company Name</Label>
+                  <Input
+                    id={`company-name-${index}`}
+                    placeholder="Google"
+                    onChange={e => handleChange(index, 'company', e.target.value)}
+                    value={experiences[index]?.company || ""}
+                  />
                 </div>
 
                 <div>
-                <Label htmlFor={`date-${index}`}>Start Date</Label>
-                <DatePicker
-                  selectedDate={experiences[index]?.start_date || undefined}
-                  onSelectDate={date => handleChange(index, 'start_date', date as any)}
-                />
+                  <Label htmlFor={`date-${index}`}>Start Date</Label>
+                  <DatePicker
+                    selectedDate={experiences[index]?.start_date || undefined}
+                    onSelectDate={date => handleChange(index, 'start_date', date as any)}
+                  />
                 </div>
 
-                <div>
-                <Label htmlFor={`date-${index}`}>End Date</Label>
-                <DatePicker
-                  selectedDate={experiences[index]?.end_date || undefined}
-                  onSelectDate={date => handleChange(index, 'end_date', date as any)}
-                />
-                
+                <div className="flex gap-5">
+                  <div>
+                    <Label htmlFor={`date-${index}`}>End Date</Label>
+                    <DatePicker
+                      selectedDate={experiences[index]?.end_date === 'Present' ? undefined : experiences[index]?.end_date}
+                      onSelectDate={(date) => handleChange(index, 'end_date', date as any)}
+                      disabled={experiences[index]?.isEndPresent}
+                    />
+                  </div>
 
+                  <div className="flex items-center">
+                    <Checkbox
+                      id={`present-${index}`}
+                      checked={experiences[index]?.isEndPresent || false}
+                      onCheckedChange={() => handleCheckboxChange(index)}
+                    />
+                    <Label htmlFor={`present-${index}`} className="ml-2">Present</Label>
+                  </div>
                 </div>
-              
               </div>
-                <label htmlFor="experiences">Detailed Experiences</label>
-                <Textarea 
+              <Label htmlFor="experiences">Detailed Experiences</Label>
+              <Textarea
                 id={`experiences-${index}`}
-                placeholder="Analyzed millions of datasets, skillfully extracting valuable insights through the utilization of Python, R, and PowerBI.." 
+                placeholder="Analyzed millions of datasets, skillfully extracting valuable insights through the utilization of Python, R, and PowerBI.."
                 onChange={e => handleChange(index, 'detailed_experience', e.target.value)}
-                value = {experiences[index]?.detailed_experience || ""}
-                />
-
-              
-
+                value={experiences[index]?.detailed_experience || ""}
+              />
             </div>
           </form>
         ))}
@@ -147,5 +153,5 @@ export function Experience({ data }: ExperienceProps) {
         <Button onClick={handleSaveExperience}>Save Experience</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

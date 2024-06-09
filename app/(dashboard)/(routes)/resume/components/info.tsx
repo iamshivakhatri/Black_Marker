@@ -23,6 +23,9 @@ import e from "express"
 import { add, set } from "date-fns"
 import { useGlobalContext } from "@/context/global-context"
 import { useEffect } from "react"
+import { Delete } from 'lucide-react';
+
+
 
 interface InfoProps {
     data: {
@@ -59,10 +62,20 @@ export function Info({ data }: InfoProps) {
 
   }
 
+  const handleDeleteAll = () => {
+    localStorage.removeItem("personal");
+    setPersonal([]);
+    addPersonalData([]);
+  };
+
   return (
     <Card className="grid-cols-2 gap-x-4 gap-y-8">
-      <CardHeader>
+      <CardHeader >
+        <div className="flex justify-between">
         <CardTitle>{data.type}</CardTitle>
+        <Delete  className="cursor-pointer" size={24} onClick={handleDeleteAll}  />
+        </div>
+        
       </CardHeader>
       <CardContent>
         {[...Array(formCount)].map((_, index) => (
