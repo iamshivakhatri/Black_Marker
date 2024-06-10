@@ -4,6 +4,9 @@ import Link from "next/link";
 import { PenLine } from 'lucide-react';
 
 export default function Home() {
+
+  
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-gray-100 to-black-gray p-4">
       <header className="text-center mt-10">
@@ -50,7 +53,13 @@ export default function Home() {
   );
 }
 
-function FeatureCard({ icon, title, description }) {
+interface FeatureCardProps {
+  icon: React.ReactNode; // icon can be any React node
+  title: string;
+  description: string;
+}
+
+const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-60 text-center">
       <div className="mb-4">{icon}</div>
