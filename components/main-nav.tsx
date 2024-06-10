@@ -1,5 +1,6 @@
 "use client";
 import {cn} from "@/lib/utils";
+import { PenLine } from 'lucide-react';
 
 import Link from "next/link";
 import {usePathname, useParams} from "next/navigation"
@@ -11,14 +12,18 @@ export const MainNav = ({className, ...props}: React.HTMLAttributes<HTMLElement>
     const routes =[
         {
             href: "/",
-            label: "Black Marker",
+            label: (
+                <span className="text-white text-2xl font-bold">
+          Black Marker <PenLine className="inline-block ml-2" />
+        </span>
+                ),
             active: pathname === "/"
         },
-        {
-            href: "/resume",
-            label: "Resume",
-            active: pathname === "/resume"
-        },
+        // {
+        //     href: "/resume",
+        //     label: "Resume",
+        //     active: pathname === "/resume"
+        // },
        
 
     ]
