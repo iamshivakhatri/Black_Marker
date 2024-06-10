@@ -25,6 +25,7 @@ type Experience = {
   start_date: string;
   end_date: string;
   detailed_experience: string;
+  isEndPresent: boolean;
 
 };
 
@@ -132,7 +133,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
   // Load data from localStorage on component mount
   useEffect(() => {
     const storedProjectData = localStorage.getItem('projectData');
-    console.log('This is the storedProjectData:', storedProjectData);
     if (storedProjectData) {
       setProjectData(JSON.parse(storedProjectData));
     
@@ -154,7 +154,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
     }
 
     const storedPersonalData = localStorage.getItem('personalData');
-    console.log('This is the storedPersonalData:', storedPersonalData)
     if (storedPersonalData) {
       setPersonalData(JSON.parse(storedPersonalData));
     }
@@ -215,14 +214,12 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
   }
 
   const addFont = (font: string) => {
-    console.log('This is the font:', font);
     setFont(font);
     localStorage.setItem('font', JSON.stringify(font));
 
   }
 
   const addFontSize = (fontSize: number) => {
-    console.log('This is the fontSize:', fontSize);
     setFontSize(fontSize);
     localStorage.setItem('fontSize', JSON.stringify(fontSize));
   }

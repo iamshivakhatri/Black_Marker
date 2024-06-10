@@ -145,7 +145,7 @@ const MyDocument: React.FC<MyDocumentProps> = ({
     },
   });
 
-  console.log('This is the font:', font);
+  console.log('experience data in my document ', experienceData);
 
   return (
     <Document>
@@ -176,14 +176,14 @@ const MyDocument: React.FC<MyDocumentProps> = ({
             <Text style={styles.subHeader}>Education</Text>
             <View style={styles.horizontalLine} />
           </View>
-          {educationData.map((education, index) => (
+          {educationData?.map((education, index) => (
             <View key={index}>
               <View style={styles.topLine}>
-                <Text style={styles.textHeader}>{education.university}</Text>
-                <Text style={styles.textBold}>{education.major}, {education.level}</Text>
-                <Text style={styles.text}>{education.graduation_date}</Text>
+                <Text style={styles.textHeader}>{education?.university}</Text>
+                <Text style={styles.textBold}>{education?.major}, {education.level}</Text>
+                <Text style={styles.text}>{education?.graduation_date}</Text>
               </View>
-              <Text style={styles.text}>Coursework: {education.coursework}</Text>
+              <Text style={styles.text}>Coursework: {education?.coursework}</Text>
             </View>
           ))}
         </View>
@@ -196,9 +196,9 @@ const MyDocument: React.FC<MyDocumentProps> = ({
           {experienceData.map((experience, index) => (
             <View key={index}>
               <View style={styles.topLine}>
-                <Text style={styles.textHeader}>{experience.title}</Text>
-                <Text style={styles.textBold}>{experience.company}</Text>
-                <Text style={styles.text}>{experience.start_date} - {experience.end_date}</Text>
+                <Text style={styles.textHeader}>{experience?.title}</Text>
+                <Text style={styles.textBold}>{experience?.company}</Text>
+                <Text style={styles.text}>{experience?.start_date} - {experience?.end_date}</Text>
               </View>
               {experience.detailed_experience && experience.detailed_experience.split('\n').map((line: string, i: number) => (
                 <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
@@ -215,13 +215,13 @@ const MyDocument: React.FC<MyDocumentProps> = ({
             <Text style={styles.subHeader}>Projects</Text>
             <View style={styles.horizontalLine} />
           </View>
-          {projectData.map((project, index) => (
+          {projectData && projectData?.map((project, index) => (
             <View key={index}>
               <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.textHeader}>{project.name} -</Text>
-                <Text style={styles.text}> {project.language}</Text>
+                <Text style={styles.textHeader}>{project?.name} -</Text>
+                <Text style={styles.text}> {project?.language}</Text>
               </View>
-              {project.description.split('\n').map((line: string, i: number) => (
+              {project && project?.description.split('\n').map((line: string, i: number) => (
                 <Text key={i} style={styles.text}>•  {line}</Text>
               ))}
             </View>
@@ -233,15 +233,15 @@ const MyDocument: React.FC<MyDocumentProps> = ({
             <Text style={styles.subHeader}>Skills</Text>
             <View style={styles.horizontalLine} />
           </View>
-          {skillsData.map((skill, index) => (
+          {skillsData && skillsData?.map((skill, index) => (
             <View key={index}>
               <View style={styles.skillContainer}>
                 <Text style={styles.boldLabel}>Languages: </Text>
-                <Text style={styles.value}>{skill.languages}</Text>
+                <Text style={styles.value}>{skill?.languages}</Text>
               </View>
               <View style={styles.skillContainer}>
                 <Text style={styles.boldLabel}>Frameworks: </Text>
-                <Text style={styles.value}>{skill.frameworks}</Text>
+                <Text style={styles.value}>{skill?.frameworks}</Text>
               </View>
             </View>
           ))}

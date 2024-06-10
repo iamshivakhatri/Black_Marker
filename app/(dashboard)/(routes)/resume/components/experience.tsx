@@ -28,7 +28,6 @@ export function Experience({ data }: ExperienceProps) {
   const { addExperienceData } = useGlobalContext();
   const [formCount, setFormCount] = React.useState(1);
   const [experiences, setExperiences] = useState<Array<{ title: string; company: string; start_date: string; end_date: string; detailed_experience: string; isEndPresent: boolean }>>([]);
-
   useEffect(() => {
     const storedExperience = localStorage.getItem('experiences');
     if (storedExperience) {
@@ -62,17 +61,49 @@ export function Experience({ data }: ExperienceProps) {
   };
 
   const handleCheckboxChange = (index: number) => {
-    console.log("index",index);
-    const updatedExperiences = [...experiences];
-    const isEndPresent = !updatedExperiences[index].isEndPresent;
-    updatedExperiences[index] = {
-      ...updatedExperiences[index],
-      isEndPresent,
-      end_date: isEndPresent ? 'Present' : ''
-    };
-    console.log("onchange",updatedExperiences);
-    setExperiences(updatedExperiences);
+    try{
+
+          const updatedExperiences = [...experiences];
+        
+          // Check if the index is within the valid range
+          if (index >= 0 && index < updatedExperiences.length) {
+            // Toggle the value of isEndPresent
+            const isEndPresent = !updatedExperiences[index].isEndPresent;
+            updatedExperiences[index] = {
+              ...updatedExperiences[index],
+              isEndPresent,
+              end_date: isEndPresent ? 'Present' : ''
+            };
+            console.log("onchange", updatedExperiences);
+            setExperiences(updatedExperiences);
+            console.log("this is experience", experiences);
+          } else if (index === updatedExperiences.length) {
+            // If the index corresponds to a new experience
+            const newExperience = {
+              title: '',
+              company: '',
+              start_date: '',
+              end_date: '',
+              detailed_experience: '',
+              isEndPresent: false  // Assuming isEndPresent should be false by default for new experiences
+            };
+            const isEndPresent = !newExperience.isEndPresent;
+            const updatedExperience = {
+              ...newExperience,
+              isEndPresent,
+              end_date: isEndPresent ? 'Present' : ''
+            };
+            setExperiences([...updatedExperiences, updatedExperience]);
+
+          } else {
+            console.error('Invalid index:', index);
+          }
+      }catch(e){
+        console.log(e);
+    }
   };
+  
+  
 
   const handleDeleteAll = () => {
     localStorage.removeItem("experiences");
