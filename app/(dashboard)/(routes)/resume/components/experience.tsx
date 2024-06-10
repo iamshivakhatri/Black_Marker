@@ -130,7 +130,7 @@ export function Experience({ data }: ExperienceProps) {
                   />
                 </div>
 
-                <div>
+                <div className="flex flex-col justify-center  gap-1 ml-auto">
                   <Label htmlFor={`date-${index}`}>Start Date</Label>
                   <DatePicker
                     selectedDate={experiences[index]?.start_date || undefined}
@@ -158,6 +158,12 @@ export function Experience({ data }: ExperienceProps) {
                   </div>
                 </div>
               </div>
+
+
+
+
+
+              
               <Label htmlFor="experiences">Detailed Experiences</Label>
               <Textarea
                 id={`experiences-${index}`}

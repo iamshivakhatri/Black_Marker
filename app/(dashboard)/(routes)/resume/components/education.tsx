@@ -128,7 +128,7 @@ export function Education({ data }: EducationProps) {
                />
                </div>
 
-               <div className="space-y-2">
+               <div className="space-y-2 flex flex-col ml-auto">
                 <Label htmlFor="framework">Graduation</Label>
                {/* <Input
                 id={`grade-${index}`} 
