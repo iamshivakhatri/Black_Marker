@@ -16,15 +16,14 @@ const PDFViewer = dynamic(() => import("@react-pdf/renderer").then(mod => mod.PD
 
 const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
   const { projectData, skillsData, experienceData, educationData, personalData, font, fontSize } = useGlobalContext();
-  console.log('This is the font:', font);
-  console.log('This is the fontSize:', fontSize);
+
 
 
   return (
     // 826 1066
-    <div className=" md:w-2/4 2xl:w-3/4  flex justify-center">
+    <div className=" md:w-2/4 2xl:w-3/4  md:flex md:justify-center mx-auto">
       <div className="w-full max-w-screen-md">
-      <PDFViewer  style={{  margin: '20px 0', width: '100%', height:'100%'}}>
+      <PDFViewer className="mobile-viewer" style={{  margin: '20px 0', width: '100%', height:'100%' }}>
         <MyDocument 
           projectData={projectData}
           skillsData={skillsData}
@@ -34,12 +33,9 @@ const ResumeLayout: React.FC<ResumeLayoutProps> = ({ data }) => {
           font={font}
           fontSize={fontSize}
         />
+
       </PDFViewer>
       </div>
-
-
-
-
     </div>
 
   );

@@ -4,10 +4,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { format, isSameMonth } from "date-fns";
-import { startOfMonth } from 'date-fns';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './datepicker.css';
 
 interface DatePickerProps {
   selectedDate: string | undefined;
@@ -33,12 +31,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ selectedDate, onSelectDate, dis
     }
   };
 
-  const handlePresentChange = () => {
-    setIsPresent(!isPresent);
-    if (!isPresent) {
-      onSelectDate(undefined); // Reset date when selecting Present
-    }
-  };
+
 
   return (
     <Popover>
@@ -65,14 +58,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ selectedDate, onSelectDate, dis
           inline
           disabled={disabled || isPresent} // Disable the date picker when Present is selected
         />
-        <label>
-          <input
-            type="checkbox"
-            checked={isPresent}
-            onChange={handlePresentChange}
-          />
-          Present
-        </label>
+       
       </PopoverContent>
     </Popover>
   );

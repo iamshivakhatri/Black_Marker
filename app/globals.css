@@ -17,6 +17,13 @@ body{
   height: 100vh;
 }
 
+@media (max-width: 768px) {
+  .mobile-viewer {
+    min-height: 40vh;
+    min-width: 40vh;
+  }
+}
+
 
 @layer base {
   :root {

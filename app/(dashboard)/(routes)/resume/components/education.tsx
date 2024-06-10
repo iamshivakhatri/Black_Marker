@@ -130,11 +130,6 @@ export function Education({ data }: EducationProps) {
 
                <div className="space-y-2 flex flex-col ml-auto">
                 <Label htmlFor="framework">Graduation</Label>
-               {/* <Input
-                id={`grade-${index}`} 
-                placeholder="Anticipated Graduation" 
-                onChange= {e => handleChange(index, 'graduation_date', e.target.value)}
-                /> */}
                  <DatePicker
                   selectedDate={education[index]?.graduation_date|| undefined}
                   onSelectDate={date => handleChange(index, 'graduation_date', date as any)}
