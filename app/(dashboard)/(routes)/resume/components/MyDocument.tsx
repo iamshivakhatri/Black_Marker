@@ -200,7 +200,7 @@ const MyDocument: React.FC<MyDocumentProps> = ({
                 <Text style={styles.textBold}>{experience.company}</Text>
                 <Text style={styles.text}>{experience.start_date} - {experience.end_date}</Text>
               </View>
-              {experience.detailed_experience.split('\n').map((line: string, i: number) => (
+              {experience.detailed_experience && experience.detailed_experience.split('\n').map((line: string, i: number) => (
                 <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                   <Text style={styles.bullet}>•</Text>
                   <Text style={styles.bulletText}>{line}</Text>
