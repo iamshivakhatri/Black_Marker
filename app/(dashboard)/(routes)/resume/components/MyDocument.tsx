@@ -145,7 +145,6 @@ const MyDocument: React.FC<MyDocumentProps> = ({
     },
   });
 
-  console.log('experience data in my document ', experienceData);
 
   return (
     <Document>

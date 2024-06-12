@@ -74,9 +74,7 @@ export function Experience({ data }: ExperienceProps) {
               isEndPresent,
               end_date: isEndPresent ? 'Present' : ''
             };
-            console.log("onchange", updatedExperiences);
             setExperiences(updatedExperiences);
-            console.log("this is experience", experiences);
           } else if (index === updatedExperiences.length) {
             // If the index corresponds to a new experience
             const newExperience = {
