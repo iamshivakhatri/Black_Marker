@@ -11,7 +11,7 @@ const ResumeInput: React.FC<ResumeInputProps> = ({ onChange }) => {
     };
 
     return (
-        <div className="h-screen mx-auto overflow-hidden md:w-2/4 2xl:w-1/4">
+        <div className="h-screen mx-auto overflow-hidden md:w-1/4 ">
             <div className="h-full overflow-y-auto">
                 <ResumeForm />
             </div>
