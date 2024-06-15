@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, Link } from '@react-pdf/renderer';
 
 // Register fonts
 try {
@@ -41,6 +41,7 @@ const MyDocument: React.FC<MyDocumentProps> = ({
   font,
   fontSize,
 }) => {
+  console.log('personalData', projectData);
   const styles = StyleSheet.create({
     page: {
       flexDirection: 'column',
@@ -143,6 +144,17 @@ const MyDocument: React.FC<MyDocumentProps> = ({
       fontSize: 10.5, // Adjust the font size as needed
       marginLeft: 5, // Adjust the margin to align with the bullet point
     },
+    link: {
+      fontSize: fontSize || 10.5, // Use passed font size or default to 10.5
+      textDecoration: 'underline',
+      color: 'black',
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      color: 'black',
+    },
   });
 
 
@@ -215,11 +227,18 @@ const MyDocument: React.FC<MyDocumentProps> = ({
             <View style={styles.horizontalLine} />
           </View>
           {projectData && projectData?.map((project, index) => (
+            
             <View key={index}>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={styles.row}>
+                <View style={{flexDirection: 'row'}}>
                 <Text style={styles.textHeader}>{project?.name} -</Text>
                 <Text style={styles.text}> {project?.language}</Text>
+                </View>
+                <Link style={styles.link} src={project?.github}>
+                GitHub
+                </Link>
               </View>
+              
               {project && project?.description.split('\n').map((line: string, i: number) => (
                 <Text key={i} style={styles.text}>•  {line}</Text>
               ))}

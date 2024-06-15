@@ -18,7 +18,7 @@ interface ProjectsProps {
 export const Projects: React.FC<ProjectsProps> = ({ data }) => {
   const { addProjectData } = useGlobalContext();
   const [formCount, setFormCount] = useState(1);
-  const [projects, setProjects] = useState<Array<{ name: string; language: string; description: string }>>([]);
+  const [projects, setProjects] = useState<Array<{ name: string; language: string; description: string; github: string }>>([]);
 
   useEffect(() => {
     const storedProjects = localStorage.getItem('projects');
@@ -94,6 +94,13 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
                 placeholder="Typescript, React, Tailwind"
                 onChange={e => handleChange(index, 'language', e.target.value)}
                 value={projects[index]?.language || ''}
+              />
+               <Label htmlFor={`github-${index}`}>Github</Label>
+              <Input
+                id={`github-${index}`}
+                placeholder="Github link"
+                onChange={e => handleChange(index, 'github', e.target.value)}
+                value={projects[index]?.github || ''}
               />
 
               <Label htmlFor={`description-${index}`}>Description</Label>

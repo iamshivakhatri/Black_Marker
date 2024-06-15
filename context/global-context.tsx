@@ -6,6 +6,7 @@ type ProjectDataType = {
   name: string;
   language: string;
   description: string;
+  github: string;
 };
 
 type UserData = {
@@ -181,6 +182,7 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
 
   const addProjectData = (projects: ProjectDataType[]) => {
     setProjectData(projects);
+    console.log(projects)
     localStorage.setItem('projectData', JSON.stringify(projects));
   };
 
