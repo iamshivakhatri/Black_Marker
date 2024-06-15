@@ -39,13 +39,12 @@ export function Experience({ data }: ExperienceProps) {
 
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
-    toast.success('Experience Added');
   };
 
   const handleSaveExperience = () => {
     localStorage.setItem('experiences', JSON.stringify(experiences));
     addExperienceData(experiences);
-    toast.success('Experience Saved');
+    toast.success('Experience Added on Resume');
   };
 
   const handleChange = (index: number, key: string, value: string | Date) => {

@@ -1,4 +1,5 @@
 import * as React from "react"
+import { toast } from "react-hot-toast";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -66,6 +67,7 @@ export function Education({ data }: EducationProps) {
   const handleSaveEducation = () => {
     localStorage.setItem('education', JSON.stringify(education));
     addEducationData(education);
+    toast.success('Education Added on Resume');
 
   };
 

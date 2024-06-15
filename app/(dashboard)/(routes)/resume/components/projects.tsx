@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useGlobalContext } from '@/context/global-context';
 import { add } from 'date-fns';
 import { Delete } from 'lucide-react';
+import { toast } from "react-hot-toast";
 
 interface ProjectsProps {
   data: {
@@ -47,6 +48,8 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
     // projects.forEach(project => addProjectData(project));
     localStorage.setItem('projects', JSON.stringify(projects));
     addProjectData(projects);
+    toast.success('Projects Added on Resume');
+
   };
   const handleDeleteAll = () => {
     localStorage.removeItem('projects');

@@ -24,6 +24,7 @@ import { add, set } from "date-fns"
 import { useGlobalContext } from "@/context/global-context"
 import { useEffect } from "react"
 import { Delete } from 'lucide-react';
+import { toast } from "react-hot-toast";
 
 
 
@@ -59,6 +60,8 @@ export function Info({ data }: InfoProps) {
   const handleSavePersonal = () => {
     localStorage.setItem('personal', JSON.stringify(personal));
     addPersonalData(personal);
+    toast.success('Personal Info Added on Resume');
+
 
   }
 

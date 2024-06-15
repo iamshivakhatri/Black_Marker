@@ -23,6 +23,7 @@ import { useGlobalContext } from '@/context/global-context';
 import { useState, useEffect } from "react";
 import { set } from "react-hook-form"
 import { Delete } from 'lucide-react';
+import { toast } from "react-hot-toast";
 
 
 
@@ -58,6 +59,7 @@ export function Skills({ data }: SkillsProps) {
   const handleSaveSkills = () => {
     addSkillsData(skills);
     localStorage.setItem('skills', JSON.stringify(skills));
+    toast.success('Skills Added on Resume');
 
   };
 

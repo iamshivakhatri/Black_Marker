@@ -41,7 +41,6 @@ const MyDocument: React.FC<MyDocumentProps> = ({
   font,
   fontSize,
 }) => {
-  console.log('personalData', projectData);
   const styles = StyleSheet.create({
     page: {
       flexDirection: 'column',

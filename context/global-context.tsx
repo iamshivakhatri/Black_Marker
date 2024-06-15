@@ -182,7 +182,6 @@ export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ ch
 
   const addProjectData = (projects: ProjectDataType[]) => {
     setProjectData(projects);
-    console.log(projects)
     localStorage.setItem('projectData', JSON.stringify(projects));
   };
 
