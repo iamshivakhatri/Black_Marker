@@ -238,9 +238,19 @@ const MyDocument: React.FC<MyDocumentProps> = ({
                 </Link>
               </View>
               
-              {project && project?.description.split('\n').map((line: string, i: number) => (
+              {/* {project && project?.description.split('\n').map((line: string, i: number) => (
                 <Text key={i} style={styles.text}>•  {line}</Text>
+              ))} */}
+
+              {project.description && project.description.split('\n').map((line: string, i: number) => (
+                <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                  <Text style={styles.bullet}>•</Text>
+                  <Text style={styles.bulletText}>{line}</Text>
+                </View>
               ))}
+
+
+
             </View>
           ))}
         </View>
