@@ -127,8 +127,8 @@ const EditableResume: React.FC<EditableResumeProps> = ({ togglePdfView }) => {
   const formatSkills = () => {
     return skillsData?.map((skill, index) => `
       <div key=${index} class="mb-4">
-        <p><strong>Languages:</strong> ${skill.languages}</p>
-        <p><strong>Frameworks:</strong> ${skill.frameworks}</p>
+        <p><strong>Languages: </strong> ${skill.languages}</p>
+        <p><strong>Frameworks: </strong> ${skill.frameworks}</p>
       </div>
     `).join('');
   };

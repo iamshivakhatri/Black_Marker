@@ -125,12 +125,20 @@ const MyDocument: React.FC<MyDocumentProps> = ({
     boldLabel: {
       fontFamily: 'Carlito',
       fontWeight: 'bold',
-      fontSize: 12,
+      fontSize: 10.5,
     },
+    // value: {
+    //   fontFamily: 'Carlito',
+    //   fontSize: 12,
+    // },
     value: {
       fontFamily: 'Carlito',
-      fontSize: 12,
+      fontSize: 10.5,
+      flexWrap: 'wrap',
+      maxWidth: '90%', // Prevents overflow
+      wordBreak: 'break-word', // Ensures long words break properly
     },
+    
     textBold: {
       fontSize: 10.5,
       fontWeight: 'bold',

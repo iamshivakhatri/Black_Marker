@@ -173,8 +173,8 @@ export function ResumeUpload({ data }: ResumeUploadProps) {
                   phone: "859-907-8967",
                   city: "Cincinnati",
                   state: "OH",
-                  github: "github.com/shivakhatri",
-                  linkedin: "linkedin.com/in/shivakhatri",
+                  github: "github.com/iamshivakhatri",
+                  linkedin: "linkedin.com/in/shiva-khatri",
                   website: "vibeuno.com"
                 }
               ],
@@ -214,7 +214,7 @@ export function ResumeUpload({ data }: ResumeUploadProps) {
                   isEndPresent: false
                 },
                 {
-                  title: "Teaching Assistant for Java Programming",
+                  title: "Teaching Assistant",
                   company: "Northern Kentucky University",
                   start_date: "Jan 2022",
                   end_date: "May 2022",
