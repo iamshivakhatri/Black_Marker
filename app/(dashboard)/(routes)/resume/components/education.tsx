@@ -33,13 +33,30 @@ export function Education({ data }: EducationProps) {
   const [education, setEducation] = useState<Array<{university: string; major: string; gpa: string; level: string; graduation_date: string; coursework: string }>>([]);
 
   useEffect(() => {
-    const storedEducation = localStorage.getItem('education');
+    const loadEducationData = () => {
+      const storedEducation = localStorage.getItem('education');
+      if (storedEducation) {
+        const parsedEducation = JSON.parse(storedEducation);
+        setEducation(parsedEducation);
+        setFormCount(Math.max(parsedEducation.length, 1));
+      }
+    };
 
-    if (storedEducation) {
-      setEducation(JSON.parse(storedEducation));
-    }
+    // Initial load
+    loadEducationData();
     
-  }, [])
+    // Listen for storage events (triggered when AI generates data)
+    const handleStorageChange = () => {
+      loadEducationData();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
 
   const handleAddForm = () => {

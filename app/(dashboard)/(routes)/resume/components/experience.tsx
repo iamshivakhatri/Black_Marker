@@ -28,13 +28,31 @@ export function Experience({ data }: ExperienceProps) {
   const { addExperienceData } = useGlobalContext();
   const [formCount, setFormCount] = React.useState(1);
   const [experiences, setExperiences] = useState<Array<{ title: string; company: string; start_date: string; end_date: string; detailed_experience: string; isEndPresent: boolean }>>([]);
-  useEffect(() => {
-    const storedExperience = localStorage.getItem('experiences');
-    if (storedExperience) {
-      setExperiences(JSON.parse(storedExperience));
-      setFormCount(JSON.parse(storedExperience).length);
-    }
 
+  useEffect(() => {
+    const loadExperienceData = () => {
+      const storedExperience = localStorage.getItem('experienceData');
+      if (storedExperience) {
+        const parsedExperience = JSON.parse(storedExperience);
+        setExperiences(parsedExperience);
+        setFormCount(Math.max(parsedExperience.length, 1));
+      }
+    };
+
+    // Initial load
+    loadExperienceData();
+    
+    // Listen for storage events (triggered when AI generates data)
+    const handleStorageChange = () => {
+      loadExperienceData();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   const handleAddForm = () => {
@@ -42,7 +60,7 @@ export function Experience({ data }: ExperienceProps) {
   };
 
   const handleSaveExperience = () => {
-    localStorage.setItem('experiences', JSON.stringify(experiences));
+    localStorage.setItem('experienceData', JSON.stringify(experiences));
     addExperienceData(experiences);
     toast.success('Experience Added on Resume');
   };
@@ -103,13 +121,13 @@ export function Experience({ data }: ExperienceProps) {
   
 
   const handleDeleteAll = () => {
-    localStorage.removeItem("experiences");
+    localStorage.removeItem("experienceData");
     setExperiences([]);
     addExperienceData([]);
   };
   const handleDeleteExperience = (index: number) => {
     const updatedExperiences = experiences.filter((_, i) => i !== index);
-    localStorage.setItem('experiences', JSON.stringify(updatedExperiences));
+    localStorage.setItem('experienceData', JSON.stringify(updatedExperiences));
     setExperiences(updatedExperiences);
     setFormCount(prevCount => prevCount - 1);
     addExperienceData(updatedExperiences);

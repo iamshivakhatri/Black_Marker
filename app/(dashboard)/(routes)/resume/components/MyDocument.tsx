@@ -136,12 +136,15 @@ const MyDocument: React.FC<MyDocumentProps> = ({
       fontWeight: 'bold',
     },
     bullet: {
-      fontSize: 10.5, // Adjust the font size as needed
+      fontSize: 10.5,
+      marginRight: 3,
     },
     bulletText: {
       flex: 1,
-      fontSize: 10.5, // Adjust the font size as needed
-      marginLeft: 5, // Adjust the margin to align with the bullet point
+      fontSize: 10.5,
+      marginLeft: 5,
+      flexWrap: 'wrap',
+      width: '95%',
     },
     link: {
       fontSize: fontSize || 10.5, // Use passed font size or default to 10.5
@@ -208,12 +211,12 @@ const MyDocument: React.FC<MyDocumentProps> = ({
               <View style={styles.topLine}>
                 <Text style={styles.textHeader}>{experience?.title}</Text>
                 <Text style={styles.textBold}>{experience?.company}</Text>
-                <Text style={styles.text}>{experience?.start_date} - {experience?.end_date}</Text>
+                <Text style={styles.text}>{experience?.start_date} - {experience?.isEndPresent ? 'Present' : experience?.end_date}</Text>
               </View>
               {experience.detailed_experience && experience.detailed_experience.split('\n').map((line: string, i: number) => (
-                <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 2, width: '100%' }}>
                   <Text style={styles.bullet}>•</Text>
-                  <Text style={styles.bulletText}>{line}</Text>
+                  <Text style={styles.bulletText}>{line.trim()}</Text>
                 </View>
               ))}
             </View>
@@ -238,14 +241,10 @@ const MyDocument: React.FC<MyDocumentProps> = ({
                 </Link>
               </View>
               
-              {/* {project && project?.description.split('\n').map((line: string, i: number) => (
-                <Text key={i} style={styles.text}>•  {line}</Text>
-              ))} */}
-
               {project.description && project.description.split('\n').map((line: string, i: number) => (
-                <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                <View key={i} style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 2, width: '100%' }}>
                   <Text style={styles.bullet}>•</Text>
-                  <Text style={styles.bulletText}>{line}</Text>
+                  <Text style={styles.bulletText}>{line.trim()}</Text>
                 </View>
               ))}
 

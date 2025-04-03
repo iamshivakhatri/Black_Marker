@@ -40,12 +40,31 @@ export function Info({ data }: InfoProps) {
   const [personal, setPersonal] = React.useState<Array<{name: string; gpa: string; email: string; city: string; state: string; website: string; github: string; phone: string; linkedin: string }>>([]);
 
   useEffect(()=>{
-    const storedPersonal = localStorage.getItem('personal');
-    if (storedPersonal) {
-      setPersonal(JSON.parse(storedPersonal));
-    }
+    const loadPersonalData = () => {
+      const storedPersonal = localStorage.getItem('personal');
+      if (storedPersonal) {
+        const parsedPersonal = JSON.parse(storedPersonal);
+        setPersonal(parsedPersonal);
+        setFormCount(Math.max(parsedPersonal.length, 1));
+      }
+    };
 
+    // Initial load
+    loadPersonalData();
+    
+    // Listen for storage events (triggered when AI generates data)
+    const handleStorageChange = () => {
+      loadPersonalData();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   },[])
+
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
   };

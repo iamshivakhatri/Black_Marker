@@ -41,11 +41,29 @@ export function Skills({ data }: SkillsProps) {
 
 
   useEffect(() => {
-    const storedSkills = localStorage.getItem('skills');
-    if (storedSkills) {
-      setSkills(JSON.parse(storedSkills));
-    }
+    const loadSkillsData = () => {
+      const storedSkills = localStorage.getItem('skillsData');
+      if (storedSkills) {
+        const parsedSkills = JSON.parse(storedSkills);
+        setSkills(parsedSkills);
+        setFormCount(Math.max(parsedSkills.length, 1));
+      }
+    };
 
+    // Initial load
+    loadSkillsData();
+    
+    // Listen for storage events (triggered when AI generates data)
+    const handleStorageChange = () => {
+      loadSkillsData();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
 
@@ -57,17 +75,17 @@ export function Skills({ data }: SkillsProps) {
   }
 
   const handleSaveSkills = () => {
+    localStorage.setItem('skillsData', JSON.stringify(skills));
     addSkillsData(skills);
-    localStorage.setItem('skills', JSON.stringify(skills));
     toast.success('Skills Added on Resume');
 
   };
 
   const handleDeleteAll = () => {
+    localStorage.removeItem("skillsData");
     setSkills([]);
-    localStorage.removeItem('skills');
     addSkillsData([]);
-  }
+  };
 
 
   return (

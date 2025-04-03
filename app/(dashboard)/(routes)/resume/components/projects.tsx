@@ -22,16 +22,30 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
   const [projects, setProjects] = useState<Array<{ name: string; language: string; description: string; github: string }>>([]);
 
   useEffect(() => {
-    const storedProjects = localStorage.getItem('projects');
-    if (storedProjects) {
-      setProjects(JSON.parse(storedProjects));
-      setFormCount(JSON.parse(storedProjects).length);
-    }
+    const loadProjectData = () => {
+      const storedProjects = localStorage.getItem('projectData');
+      if (storedProjects) {
+        const parsedProjects = JSON.parse(storedProjects);
+        setProjects(parsedProjects);
+        setFormCount(Math.max(parsedProjects.length, 1));
+      }
+    };
 
-  },[]);
-
-
- 
+    // Initial load
+    loadProjectData();
+    
+    // Listen for storage events (triggered when AI generates data)
+    const handleStorageChange = () => {
+      loadProjectData();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const handleAddForm = () => {
     setFormCount(prevCount => prevCount + 1);
@@ -44,22 +58,22 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
     setProjects(updatedProjects);
   };
 
-  const handleSaveProject = () => {
-    // projects.forEach(project => addProjectData(project));
-    localStorage.setItem('projects', JSON.stringify(projects));
+  const handleSaveProjects = () => {
+    localStorage.setItem('projectData', JSON.stringify(projects));
     addProjectData(projects);
     toast.success('Projects Added on Resume');
 
   };
+
   const handleDeleteAll = () => {
-    localStorage.removeItem('projects');
+    localStorage.removeItem("projectData");
     setProjects([]);
     addProjectData([]);
-  }
+  };
 
-  const handleDeleteExperience = (index: number) => {
+  const handleDeleteProject = (index: number) => {
     const updatedProjects = projects.filter((_, i) => i !== index);
-    localStorage.setItem('projects', JSON.stringify(updatedProjects));
+    localStorage.setItem('projectData', JSON.stringify(updatedProjects));
     setProjects(updatedProjects);
     setFormCount(prevCount => prevCount - 1);
     addProjectData(updatedProjects);
@@ -80,7 +94,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
               <div className="flex flex-col space-y-1.5">
                 <div className='flex justify-between items-center'> 
                 <Label htmlFor={`name-${index}`}>Name</Label>
-                <Button className="text-red-500" onClick={() => handleDeleteExperience(index)}>-</Button>
+                <Button className="text-red-500" onClick={() => handleDeleteProject(index)}>-</Button>
                 </div>
 
                 
@@ -121,7 +135,7 @@ export const Projects: React.FC<ProjectsProps> = ({ data }) => {
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button className='mr-1' onClick={handleAddForm}>+1</Button>
-        <Button onClick={handleSaveProject}>Save Projects</Button>
+        <Button onClick={handleSaveProjects}>Save Projects</Button>
       </CardFooter>
     </Card>
   );
